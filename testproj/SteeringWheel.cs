@@ -22,10 +22,5 @@ namespace MonoRider
         {
             _Rotation = (player.momentum / 200) * 10;
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_Texture, _Position, null, Color.White, _Rotation, center, 1f, SpriteEffects.None, 0f);
-        }
     }
 }
