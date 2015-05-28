@@ -11,8 +11,8 @@ namespace MonoRider
     {
         public override void Initialize(Texture2D texture, Vector2 position)
         {
-            HP = 1;
-            Tag = "enemycar";
+            _HP = 1;
+            _Tag = "enemycar";
             base.Initialize(texture, position);
         }
 

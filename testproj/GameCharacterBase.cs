@@ -11,11 +11,17 @@ namespace MonoRider
         public Vector2 _Position;
         public bool _Draw = true;
         public bool _Active = true;
-        public int HP;
-        public string Tag = "base";
+        public int _HP;
+        public string _Tag = "base";
 
-        public float rotation = 0.0f;
-
+        public float _Rotation = 0.0f;
+        public Vector2 _Center
+        {
+            get
+            {
+                return new Vector2(_Texture.Width / 2, _Texture.Height / 2);
+            }
+        }
         public Rectangle BoundingBox
         {
             get
@@ -28,7 +34,6 @@ namespace MonoRider
         {
             _Texture = texture;
             _Position = position;
-            //center = 
         }
 
         public virtual void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
@@ -47,14 +52,15 @@ namespace MonoRider
         {
             if (_Draw)
             {
-                spriteBatch.Draw(_Texture, _Position, null, Color.White, rotation, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Rectangle sr = new Rectangle(0, 0, _Texture.Width, _Texture.Height);
+                spriteBatch.Draw(_Texture, _Position, sr, Color.White, _Rotation, _Center, 1.0f, SpriteEffects.None, 1f);
             }
         }
 
         public virtual void ReceiveDamage(int amt)
         {
-            HP -= amt;
-            if(HP <= 0)
+            _HP -= amt;
+            if(_HP <= 0)
             {
                 Die();
             }

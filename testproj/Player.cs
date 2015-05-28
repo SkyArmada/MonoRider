@@ -12,10 +12,11 @@ namespace MonoRider
         public float momentum = 0;
         bool spinOut = false;
         private Vector2 center;
+        private int loops = 0;
         public override void Initialize(Texture2D texture, Vector2 position)
         {
-            HP = 1;
-            Tag = "player";
+            _HP = 1;
+            _Tag = "player";
             base.Initialize(texture, position);
             center = new Vector2(_Texture.Height / 2, _Texture.Width / 2);
         }
@@ -29,7 +30,18 @@ namespace MonoRider
                 HandleCollistion(objs);
                 if(spinOut)
                 {
-                    rotation += 0.05f;
+                    _Rotation += 0.15f;
+                    if(_Rotation >= Math.PI * 2)
+                    {
+                        loops++;
+                        _Rotation = 0;
+                        if(loops >= 2)
+                        {
+                            spinOut = false;
+                            _Rotation = 0;
+                            loops = 0;
+                        }
+                    }
                 }
                 LockInBounds();
             }
@@ -66,6 +78,7 @@ namespace MonoRider
             }
 
 
+
             _Position.X = _Position.X + (momentum);
             //if (momentum >= friction)
             //{
@@ -81,12 +94,12 @@ namespace MonoRider
         {
             foreach(GameCharacterBase obj in objs)
             {
-                if(obj.Tag.Equals("player"))
+                if(obj._Tag.Equals("player"))
                 {
                     continue;
                 }
 
-                if(obj.Tag.Equals("gear"))
+                if(obj._Tag.Equals("gear"))
                 {
                     if(this.BoundingBox.Intersects(obj.BoundingBox))
                     {
@@ -108,11 +121,6 @@ namespace MonoRider
                 _Position.X = (320 - _Texture.Width);
                 //momentum = 0;
             }
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_Texture, _Position, null, Color.White, rotation, center, 1f, SpriteEffects.None, 0f);
         }
     }
 }
