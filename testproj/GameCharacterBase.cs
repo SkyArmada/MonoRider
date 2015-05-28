@@ -13,8 +13,14 @@ namespace MonoRider
         public bool _Active = true;
         public int _HP;
         public string _Tag = "base";
-
         public float _Rotation = 0.0f;
+        public int _zOrder;
+        public float _Scale = 1.0f;
+        public bool _FlipX = false;
+        public bool _FlipY = false;
+        public bool _LockInScreen = false;
+        public List<GameCharacterBase> _ChildrenList;
+
         public Vector2 _Center
         {
             get
@@ -22,7 +28,7 @@ namespace MonoRider
                 return new Vector2(_Texture.Width / 2, _Texture.Height / 2);
             }
         }
-        public Rectangle BoundingBox
+        public Rectangle _BoundingBox
         {
             get
             {
@@ -34,17 +40,18 @@ namespace MonoRider
         {
             _Texture = texture;
             _Position = position;
+            _ChildrenList = new List<GameCharacterBase>();
         }
 
         public virtual void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
         {
-            float speed = 240.0f;
-            _Position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Random num = new Random();
-            if (_Position.Y > 500)
+            foreach(GameCharacterBase child in _ChildrenList)
             {
-                _Position.Y = -10 * num.Next(250);
-                _Position.X = num.Next(320 - _Texture.Width);
+                child.Update(gameTime, gameObjectList);
+            }
+            if(_LockInScreen)
+            {
+                LockInBounds();
             }
         }
 
@@ -53,7 +60,22 @@ namespace MonoRider
             if (_Draw)
             {
                 Rectangle sr = new Rectangle(0, 0, _Texture.Width, _Texture.Height);
-                spriteBatch.Draw(_Texture, _Position, sr, Color.White, _Rotation, _Center, 1.0f, SpriteEffects.None, 1f);
+                if(!_FlipX && !_FlipY)
+                {
+                    spriteBatch.Draw(_Texture, _Position, sr, Color.White, _Rotation, _Center, _Scale, SpriteEffects.None, 0f);
+                }
+                else if(_FlipX)
+                {
+                    spriteBatch.Draw(_Texture, _Position, sr, Color.White, _Rotation, _Center, _Scale, SpriteEffects.FlipHorizontally, 0f);
+                }
+                else if(_FlipY)
+                {
+                    spriteBatch.Draw(_Texture, _Position, sr, Color.White, _Rotation, _Center, _Scale, SpriteEffects.FlipVertically, 0f);
+                }
+                else if(_FlipX && _FlipY)
+                {
+                    spriteBatch.Draw(_Texture, _Position, sr, Color.White, (_Rotation + (float)Math.PI), _Center, _Scale, SpriteEffects.None, 0f);
+                }
             }
         }
 
@@ -70,6 +92,25 @@ namespace MonoRider
         {
             _Active = false;
             _Draw = false;
+        }
+
+        public void AddChild(GameCharacterBase child)
+        {
+            _ChildrenList.Add(child);
+        }
+
+        public void LockInBounds()
+        {
+            if ((_Position.X - (_Texture.Width / 2)) <= 0)
+            {
+                _Position.X = _Texture.Width / 2;
+                //momentum = 0;
+            }
+            if ((_Position.X + (_Texture.Width / 2)) > 320)
+            {
+                _Position.X = 320 - (_Texture.Width / 2);
+                //momentum = 0;
+            }
         }
     }
 }

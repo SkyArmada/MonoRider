@@ -17,17 +17,18 @@ namespace MonoRider
         {
             _HP = 1;
             _Tag = "player";
+            _LockInScreen = true;
             base.Initialize(texture, position);
             center = new Vector2(_Texture.Height / 2, _Texture.Width / 2);
         }
 
 
-        public override void Update(GameTime gameTime, List<GameCharacterBase> objs)
+        public override void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
         {
             if(_Active)
             {
                 handleMovement(gameTime);
-                HandleCollistion(objs);
+                HandleCollistion(gameObjectList);
                 if(spinOut)
                 {
                     _Rotation += 0.15f;
@@ -43,8 +44,8 @@ namespace MonoRider
                         }
                     }
                 }
-                LockInBounds();
             }
+            base.Update(gameTime, gameObjectList);
         }
 
         private void handleMovement(GameTime gameTime)
@@ -90,9 +91,9 @@ namespace MonoRider
             //}
         }
 
-        private void HandleCollistion(List<GameCharacterBase> objs)
+        private void HandleCollistion(List<GameCharacterBase> gameObjectList)
         {
-            foreach(GameCharacterBase obj in objs)
+            foreach(GameCharacterBase obj in gameObjectList)
             {
                 if(obj._Tag.Equals("player"))
                 {
@@ -101,25 +102,11 @@ namespace MonoRider
 
                 if(obj._Tag.Equals("gear"))
                 {
-                    if(this.BoundingBox.Intersects(obj.BoundingBox))
+                    if (_BoundingBox.Intersects(obj._BoundingBox))
                     {
                         obj.ReceiveDamage(1);
                     }
                 }
-            }
-        }
-
-        private void LockInBounds()
-        {
-            if(_Position.X <= 0)
-            {
-                _Position.X = 0;
-                //momentum = 0;
-            }
-            if (_Position.X >= (320 - _Texture.Width))
-            {
-                _Position.X = (320 - _Texture.Width);
-                //momentum = 0;
             }
         }
     }

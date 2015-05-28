@@ -9,13 +9,11 @@ namespace MonoRider
 {
     class SteeringWheel : GameCharacterBase
     {
-        private Vector2 center;
         public override void Initialize(Texture2D texture, Vector2 position)
         {
             _HP = 1;
             _Tag = "steeringwheel";
             base.Initialize(texture, position);
-            center = new Vector2(_Texture.Height / 2, _Texture.Width / 2);
         }
 
         public void Update(GameTime gameTime, Player player)
