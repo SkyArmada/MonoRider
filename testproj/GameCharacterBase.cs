@@ -20,6 +20,7 @@ namespace MonoRider
         public bool _FlipY = false;
         public bool _LockInScreen = false;
         public List<GameCharacterBase> _ChildrenList;
+        public Color _MyColor = Color.White;
 
         public Vector2 _Center
         {
@@ -62,19 +63,19 @@ namespace MonoRider
                 Rectangle sr = new Rectangle(0, 0, _Texture.Width, _Texture.Height);
                 if(!_FlipX && !_FlipY)
                 {
-                    spriteBatch.Draw(_Texture, _Position, sr, Color.White, _Rotation, _Center, _Scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(_Texture, _Position, sr, _MyColor, _Rotation, _Center, _Scale, SpriteEffects.None, 0f);
                 }
                 else if(_FlipX)
                 {
-                    spriteBatch.Draw(_Texture, _Position, sr, Color.White, _Rotation, _Center, _Scale, SpriteEffects.FlipHorizontally, 0f);
+                    spriteBatch.Draw(_Texture, _Position, sr, _MyColor, _Rotation, _Center, _Scale, SpriteEffects.FlipHorizontally, 0f);
                 }
                 else if(_FlipY)
                 {
-                    spriteBatch.Draw(_Texture, _Position, sr, Color.White, _Rotation, _Center, _Scale, SpriteEffects.FlipVertically, 0f);
+                    spriteBatch.Draw(_Texture, _Position, sr, _MyColor, _Rotation, _Center, _Scale, SpriteEffects.FlipVertically, 0f);
                 }
                 else if(_FlipX && _FlipY)
                 {
-                    spriteBatch.Draw(_Texture, _Position, sr, Color.White, (_Rotation + (float)Math.PI), _Center, _Scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(_Texture, _Position, sr, _MyColor, (_Rotation + (float)Math.PI), _Center, _Scale, SpriteEffects.None, 0f);
                 }
             }
         }

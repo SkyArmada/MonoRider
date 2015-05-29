@@ -62,7 +62,7 @@ namespace MonoRider
 
             Random num = new Random();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 30; i++)
             {
                 Gear gear = new Gear();
                 float gearXPos = num.Next(320);
@@ -70,7 +70,26 @@ namespace MonoRider
                 gearPos.X = gearXPos;
                 gearPos.Y = -10 * num.Next(250);
                 gear.Initialize(Content.Load<Texture2D>("Graphics\\gear1"), gearPos);
+
+                if(i > 10)
+                {
+                    gear._Active = false;
+                }
                 GameObjectList.Add(gear);
+            }
+
+            for(int i = 0; i <= 30; i++)
+            {
+                EnemyCar car = new EnemyCar();
+                float carXPos = num.Next(320);
+                Vector2 carPos = new Vector2(carXPos, -10 * num.Next(250));
+                car.Initialize(Content.Load<Texture2D>("Graphics//car2"), carPos);
+
+                if(i > 2)
+                {
+                    car._Active = false;
+                }
+                GameObjectList.Add(car);
             }
         }
 
