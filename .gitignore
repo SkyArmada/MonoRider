@@ -47,3 +47,4 @@ testproj/obj/x86/Debug/MonoRider.csproj.FileListAbsolute.txt
 testproj/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 testproj/bin/Windows/Debug/testProj.exe
 *.pdb
+testproj/obj/x86/Debug/testProj.pdb
