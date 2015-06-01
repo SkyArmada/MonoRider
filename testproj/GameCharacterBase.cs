@@ -78,6 +78,7 @@ namespace MonoRider
                     spriteBatch.Draw(_Texture, _Position, sr, _MyColor, (_Rotation + (float)Math.PI), _Center, _Scale, SpriteEffects.None, 0f);
                 }
             }
+            
         }
 
         public virtual void ReceiveDamage(int amt)
@@ -112,6 +113,21 @@ namespace MonoRider
                 _Position.X = 320 - (_Texture.Width / 2);
                 //momentum = 0;
             }
+        }
+
+        public void ChangeColor(Color searchColor, Color toColor)
+        {
+            Color[] data = new Color[_Texture.Width * _Texture.Height];
+            _Texture.GetData(data);
+            for(int i = 0; i < data.Length; i++)
+            {
+                if(data[i] == searchColor)
+                {
+                    data[i] = toColor;
+                }
+            }
+
+            _Texture.SetData(data);
         }
     }
 }

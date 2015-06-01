@@ -85,7 +85,12 @@ namespace MonoRider
                 Vector2 carPos = new Vector2(carXPos, -10 * num.Next(250));
                 car.Initialize(Content.Load<Texture2D>("Graphics//car2"), carPos);
 
-                if(i > 2)
+                if(i < 6)
+                {
+                    car._Active = true;
+                    //car.ChangeColor(new Color(213, 255, 28, 255), new Color(num.Next(255),num.Next(255),num.Next(255),255));
+                }
+                else
                 {
                     car._Active = false;
                 }
@@ -146,7 +151,7 @@ namespace MonoRider
             }
             else
             {
-                spriteBatch.Begin();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             }
             spriteBatch.Draw(background, new Rectangle(0, 0, 320, 480), Color.White);
 

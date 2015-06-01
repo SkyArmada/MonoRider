@@ -14,7 +14,7 @@ namespace MonoRider
             _HP = 1;
             _Tag = "enemycar";
             _FlipY = true;
-            _MyColor = Color.Red;
+            //_MyColor = Color.Red;
             base.Initialize(texture, position);
         }
 
