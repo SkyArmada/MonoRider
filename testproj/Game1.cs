@@ -18,6 +18,7 @@ namespace MonoRider
         Texture2D background;
         SteeringWheel wheel;
         bool debug = false;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -55,10 +56,9 @@ namespace MonoRider
             background = Content.Load<Texture2D>("Graphics\\grassBackground");
             Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, 320);
             Vector2 wheelPos = new Vector2(160, 520);
-
-            player.Initialize(Content.Load<Texture2D>("Graphics\\car2"), playerPosition);
+            player.LoadContent("Graphics\\car2", Content, playerPosition);
             GameObjectList.Add(player);
-            wheel.Initialize(Content.Load<Texture2D>("Graphics\\wheel"), wheelPos);
+            wheel.LoadContent("Graphics\\gear1", Content, wheelPos);
 
             Random num = new Random();
 
@@ -69,7 +69,7 @@ namespace MonoRider
                 Vector2 gearPos;
                 gearPos.X = gearXPos;
                 gearPos.Y = -10 * num.Next(250);
-                gear.Initialize(Content.Load<Texture2D>("Graphics\\gear1"), gearPos);
+                gear.LoadContent("Graphics\\gear1", Content, gearPos);
 
                 if(i > 10)
                 {

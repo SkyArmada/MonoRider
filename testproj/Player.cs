@@ -13,6 +13,8 @@ namespace MonoRider
         bool spinOut = false;
         private Vector2 center;
         private int loops = 0;
+        Gear testGear;
+
         public override void Initialize(Texture2D texture, Vector2 position)
         {
             _HP = 1;
@@ -20,8 +22,16 @@ namespace MonoRider
             _LockInScreen = true;
             base.Initialize(texture, position);
             center = new Vector2(_Texture.Height / 2, _Texture.Width / 2);
+            testGear = new Gear();
         }
 
+        public override void LoadContent(string path, Microsoft.Xna.Framework.Content.ContentManager Content)
+        {
+            base.LoadContent(path, Content);
+            testGear.LoadContent("Graphics/gear1", Content);
+            testGear._Position = new Vector2(_Position.X + 20, _Position.Y);
+            this.AddChild(testGear);
+        }
 
         public override void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace MonoRider
 {
@@ -21,6 +22,8 @@ namespace MonoRider
         public bool _LockInScreen = false;
         public List<GameCharacterBase> _ChildrenList;
         public Color _MyColor = Color.White;
+        public GameCharacterBase parent = null;
+        private ContentManager content;
 
         public Vector2 _Center
         {
@@ -29,6 +32,7 @@ namespace MonoRider
                 return new Vector2(_Texture.Width / 2, _Texture.Height / 2);
             }
         }
+
         public Rectangle _BoundingBox
         {
             get
@@ -42,6 +46,22 @@ namespace MonoRider
             _Texture = texture;
             _Position = position;
             _ChildrenList = new List<GameCharacterBase>();
+        }
+
+        public virtual void LoadContent(string path, ContentManager Content)
+        {
+            content = Content;
+            _Texture = content.Load<Texture2D>(path);
+        }
+
+        public virtual void LoadContent(string path, ContentManager Content, Vector2? pos)
+        {
+            content = Content;
+            _Texture = content.Load<Texture2D>(path);
+            if(pos == null)
+            {
+                _Position = new Vector2(0, 0);
+            }
         }
 
         public virtual void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
@@ -98,6 +118,7 @@ namespace MonoRider
 
         public void AddChild(GameCharacterBase child)
         {
+            child.parent = this;
             _ChildrenList.Add(child);
         }
 
