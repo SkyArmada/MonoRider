@@ -50,3 +50,7 @@ testproj/bin/Windows/Debug/testProj.exe
 testproj/obj/x86/Debug/testProj.pdb
 New folder/Microsoft Permissive License.rtf
 testproj/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+testproj/bin/Windows/Debug/testProj.exe
+*.exe
+testproj/bin/Windows/Debug/testProj.pdb
+*.pdb

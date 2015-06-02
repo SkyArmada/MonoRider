@@ -9,11 +9,11 @@ namespace MonoRider
 {
     class Gear : GameCharacterBase
     {
-        public override void Initialize(Texture2D texture, Vector2 position)
+        public Gear()
         {
             _HP = 1;
             _Tag = "gear";
-            base.Initialize(texture, position);
+            _zOrder = 1f;
         }
 
         public override void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)

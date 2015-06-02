@@ -15,7 +15,7 @@ namespace MonoRider
         public int _HP;
         public string _Tag = "base";
         public float _Rotation = 0.0f;
-        public int _zOrder;
+        public float _zOrder;
         public float _Scale = 1.0f;
         public bool _FlipX = false;
         public bool _FlipY = false;
@@ -41,38 +41,35 @@ namespace MonoRider
             }
         }
 
-        public virtual void Initialize(Texture2D texture, Vector2 position)
-        {
-            _Texture = texture;
-            _Position = position;
-            _ChildrenList = new List<GameCharacterBase>();
-        }
-
         public virtual void LoadContent(string path, ContentManager Content)
         {
             content = Content;
             _Texture = content.Load<Texture2D>(path);
         }
 
-        public virtual void LoadContent(string path, ContentManager Content, Vector2? pos)
-        {
-            content = Content;
-            _Texture = content.Load<Texture2D>(path);
-            if(pos == null)
-            {
-                _Position = new Vector2(0, 0);
-            }
-        }
-
         public virtual void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
         {
-            foreach(GameCharacterBase child in _ChildrenList)
+            if (_Active)
             {
-                child.Update(gameTime, gameObjectList);
+                if (_ChildrenList != null)
+                {
+                    if (_ChildrenList.Count >= 1)
+                    {
+                        foreach (GameCharacterBase child in _ChildrenList)
+                        {
+                            child.Update(gameTime, gameObjectList);
+                        }
+                    }
+                }
+
+                if (_LockInScreen)
+                {
+                    LockInBounds();
+                }
             }
-            if(_LockInScreen)
+            else
             {
-                LockInBounds();
+                _Position = new Vector2(-500, -500);
             }
         }
 
@@ -96,6 +93,17 @@ namespace MonoRider
                 else if(_FlipX && _FlipY)
                 {
                     spriteBatch.Draw(_Texture, _Position, sr, _MyColor, (_Rotation + (float)Math.PI), _Center, _Scale, SpriteEffects.None, 0f);
+                }
+
+                if (_ChildrenList != null)
+                {
+                    if (_ChildrenList.Count >= 1)
+                    {
+                        foreach (GameCharacterBase child in _ChildrenList)
+                        {
+                            child.Draw(spriteBatch);
+                        }
+                    }
                 }
             }
             

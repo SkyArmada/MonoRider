@@ -9,13 +9,13 @@ namespace MonoRider
 {
     class EnemyCar : GameCharacterBase
     {
-        public override void Initialize(Texture2D texture, Vector2 position)
+        public EnemyCar()
         {
             _HP = 1;
             _Tag = "enemycar";
             _FlipY = true;
+            _zOrder = 2f;
             //_MyColor = Color.Red;
-            base.Initialize(texture, position);
         }
 
         public override void Update(GameTime gameTime, List<GameCharacterBase> objs)

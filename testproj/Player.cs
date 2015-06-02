@@ -11,25 +11,24 @@ namespace MonoRider
     {
         public float momentum = 0;
         bool spinOut = false;
-        private Vector2 center;
         private int loops = 0;
         Gear testGear;
 
-        public override void Initialize(Texture2D texture, Vector2 position)
+        public Player()
         {
             _HP = 1;
             _Tag = "player";
             _LockInScreen = true;
-            base.Initialize(texture, position);
-            center = new Vector2(_Texture.Height / 2, _Texture.Width / 2);
+            _zOrder = 15f;
             testGear = new Gear();
+            _ChildrenList = new List<GameCharacterBase>();
         }
 
         public override void LoadContent(string path, Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             base.LoadContent(path, Content);
             testGear.LoadContent("Graphics/gear1", Content);
-            testGear._Position = new Vector2(_Position.X + 20, _Position.Y);
+            testGear._Position = new Vector2(200, 320);
             this.AddChild(testGear);
         }
 
@@ -55,15 +54,16 @@ namespace MonoRider
                     }
                 }
             }
+            //testGear._Position = new Vector2(_Position.X + 20, _Position.Y);
             base.Update(gameTime, gameObjectList);
         }
 
         private void handleMovement(GameTime gameTime)
         {
-            int friction = 10;
+            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float friction = 5.0f * delta;
             if (!spinOut)
             {
-                var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 KeyboardState state = Keyboard.GetState();
                 int momentumGain = 15;
                 if (state.IsKeyDown(Keys.A))
@@ -87,18 +87,16 @@ namespace MonoRider
                     momentum = -180;
                 }
             }
-
-
-
             _Position.X = _Position.X + (momentum);
-            //if (momentum >= friction)
-            //{
-            //    momentum -= friction;
-            //}
-            //else if(momentum <= -friction)
-            //{
-            //    momentum += friction;
-            //}
+
+            if (momentum >= 0f)
+            {
+                momentum -= friction;
+            }
+            else if(momentum <= 0f)
+            {
+                momentum += friction;
+            }
         }
 
         private void HandleCollistion(List<GameCharacterBase> gameObjectList)

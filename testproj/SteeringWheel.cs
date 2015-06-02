@@ -9,16 +9,16 @@ namespace MonoRider
 {
     class SteeringWheel : GameCharacterBase
     {
-        public override void Initialize(Texture2D texture, Vector2 position)
+        public SteeringWheel()
         {
             _HP = 1;
             _Tag = "steeringwheel";
-            base.Initialize(texture, position);
+            _zOrder = 20f;
         }
 
-        public void Update(GameTime gameTime, Player player)
+        public void Update(GameTime gameTime, float playerMomentum)
         {
-            _Rotation = (player.momentum / 200) * 10;
+            _Rotation = (playerMomentum / 200) * 10;
         }
     }
 }
