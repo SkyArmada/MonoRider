@@ -7,19 +7,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoRider
 {
-    class EnemyCar : Sprite
+    class Gear : Sprite
     {
-        public EnemyCar()
+        public Gear()
         {
             _HP = 1;
-            _Tag = "enemycar";
-            _FlipY = true;
-            _zOrder = 2f;
-            //_MyColor = Color.Red;
+            _Tag = "gear";
+            _zOrder = 1f;
         }
 
-        public override void Update(GameTime gameTime, List<Sprite> objs)
+        public override void Update(GameTime gameTime, List<Sprite> gameObjectList)
         {
+            _Rotation += 0.05f;
             float speed = 240.0f;
             _Position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Random num = new Random();
@@ -28,6 +27,15 @@ namespace MonoRider
                 _Position.Y = -10 * num.Next(250);
                 _Position.X = num.Next(320 - _Texture.Width);
             }
+            base.Update(gameTime, gameObjectList);
+        }
+
+        public override void ResetSelf()
+        {
+            base.ResetSelf();
+            _HP = 1;
+            _Tag = "gear";
+            _zOrder = 1f;
         }
     }
 }

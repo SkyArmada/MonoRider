@@ -11,7 +11,6 @@ namespace MonoRider
         public Texture2D _Texture;
         public Vector2 _Position;
         public bool _Draw = true;
-        public bool _Active = true;
         public int _HP;
         public string _Tag = "base";
         public float _Rotation = 0.0f;
@@ -24,6 +23,15 @@ namespace MonoRider
         public Color _MyColor = Color.White;
         public Sprite parent = null;
         private ContentManager content;
+
+        public enum SpriteState
+        {
+            kStateActive,
+            kStateDead,
+            kStateInActive
+        }
+
+        public SpriteState _CurrentState = SpriteState.kStateActive;
 
         public Vector2 _Center
         {
@@ -49,7 +57,7 @@ namespace MonoRider
 
         public virtual void Update(GameTime gameTime, List<Sprite> gameObjectList)
         {
-            if (_Active)
+            if (_CurrentState == SpriteState.kStateActive)
             {
                 if (_ChildrenList != null)
                 {
@@ -120,7 +128,7 @@ namespace MonoRider
 
         private void Die()
         {
-            _Active = false;
+            _CurrentState = SpriteState.kStateDead;
             _Draw = false;
         }
 
@@ -155,6 +163,24 @@ namespace MonoRider
             }
 
             _Texture.SetData(data);
+        }
+
+        public virtual void ResetSelf()
+        {
+            _Texture = null;
+            _Position = Vector2.Zero;
+            _Draw = true;
+            _CurrentState = SpriteState.kStateActive;
+            _Tag = "base";
+            _Rotation = 0.0f;
+            _Scale = 1.0f;
+            _FlipX = false;
+            _FlipY = false;
+            _LockInScreen = false;
+            _ChildrenList = null;
+            _MyColor = Color.White;
+            parent = null;
+            content = null;
         }
     }
 }

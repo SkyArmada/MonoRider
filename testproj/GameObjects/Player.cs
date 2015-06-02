@@ -13,7 +13,6 @@ namespace MonoRider
         private float last_momentum = 0;
         bool spinOut = false;
         private int loops = 0;
-        Gear testGear;
 
         public Player()
         {
@@ -21,21 +20,17 @@ namespace MonoRider
             _Tag = "player";
             _LockInScreen = true;
             _zOrder = 15f;
-            testGear = new Gear();
             _ChildrenList = new List<Sprite>();
         }
 
         public override void LoadContent(string path, Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             base.LoadContent(path, Content);
-            testGear.LoadContent("Graphics/gear1", Content);
-            testGear._Position = new Vector2(200, 320);
-            this.AddChild(testGear);
         }
 
         public override void Update(GameTime gameTime, List<Sprite> gameObjectList)
         {
-            if(_Active)
+            if(_CurrentState == SpriteState.kStateActive)
             {
                 handleMovement(gameTime);
                 HandleCollistion(gameObjectList);
@@ -55,7 +50,6 @@ namespace MonoRider
                     }
                 }
             }
-            //testGear._Position = new Vector2(_Position.X + 20, _Position.Y);
             base.Update(gameTime, gameObjectList);
         }
 
@@ -90,13 +84,24 @@ namespace MonoRider
             }
             _Position.X = _Position.X + (momentum);
             LockInBounds();
-            if (momentum >= 0f)
+            if (momentum != 0)
             {
-                momentum -= friction;
-            }
-            else if(momentum <= 0f)
-            {
-                momentum += friction;
+                if (momentum >= 0f)
+                {
+                    momentum -= friction;
+                    if(momentum <= 0.02f)
+                    {
+                        momentum = 0;
+                    }
+                }
+                else if (momentum <= 0f)
+                {
+                    momentum += friction;
+                    if(momentum >= -0.02f)
+                    {
+                        momentum = 0;
+                    }
+                }
             }
             last_momentum = momentum;
         }
@@ -110,11 +115,19 @@ namespace MonoRider
                     continue;
                 }
 
-                if(obj._Tag.Equals("gear"))
+                if(obj._Tag.Equals("gear") && obj._CurrentState == SpriteState.kStateActive)
                 {
                     if (_BoundingBox.Intersects(obj._BoundingBox))
                     {
                         obj.ReceiveDamage(1);
+                    }
+                }
+
+                if(obj.Equals("enemycar") && obj._CurrentState == SpriteState.kStateActive)
+                {
+                    if(_BoundingBox.Intersects(obj._BoundingBox))
+                    {
+                        this.ReceiveDamage(1);
                     }
                 }
             }
@@ -132,6 +145,21 @@ namespace MonoRider
                 _Position.X = 320 - (_Texture.Width / 2);
                 momentum = last_momentum;
             }
+        }
+
+        public override void ResetSelf()
+        {
+            base.ResetSelf();
+            
+            momentum = 0;
+            last_momentum = 0;
+            spinOut = false;
+            loops = 0;
+            _HP = 1;
+            _Tag = "player";
+            _LockInScreen = true;
+            _zOrder = 15f;
+            _ChildrenList = new List<Sprite>();
         }
     }
 }

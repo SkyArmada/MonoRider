@@ -39,14 +39,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedTexture.cs" />
-    <Compile Include="EnemyCar.cs" />
-    <Compile Include="Game1.cs" />
-    <Compile Include="Sprite.cs" />
-    <Compile Include="Gear.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="GameObjects\EnemyCar.cs" />
+    <Compile Include="GamePlayScene.cs" />
+    <Compile Include="GameObjects\Sprite.cs" />
+    <Compile Include="GameObjects\Gear.cs" />
+    <Compile Include="GameObjects\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SteeringWheel.cs" />
+    <Compile Include="GameObjects\SteeringWheel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
