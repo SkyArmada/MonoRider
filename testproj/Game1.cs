@@ -14,7 +14,7 @@ namespace MonoRider
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
-        List<GameCharacterBase> GameObjectList;
+        List<Sprite> GameObjectList;
         Texture2D background;
         SteeringWheel wheel;
         bool debug = false;
@@ -39,7 +39,7 @@ namespace MonoRider
             // TODO: Add your initialization logic here
             player = new Player();
             wheel = new SteeringWheel();
-            GameObjectList = new List<GameCharacterBase>();
+            GameObjectList = new List<Sprite>();
             base.Initialize();
         }
 
@@ -118,7 +118,7 @@ namespace MonoRider
                 Exit();
 
             // TODO: Add your update logic here
-            foreach (GameCharacterBase obj in GameObjectList)
+            foreach (Sprite obj in GameObjectList)
             {
                 if (obj._Active)
                 {
@@ -158,7 +158,7 @@ namespace MonoRider
 
 
             // Draw the Player
-            foreach (GameCharacterBase obj in GameObjectList)
+            foreach (Sprite obj in GameObjectList)
             {
                 obj.Draw(spriteBatch);
             }

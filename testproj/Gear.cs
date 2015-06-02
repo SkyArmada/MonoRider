@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoRider
 {
-    class Gear : GameCharacterBase
+    class Gear : Sprite
     {
         public Gear()
         {
@@ -16,7 +16,7 @@ namespace MonoRider
             _zOrder = 1f;
         }
 
-        public override void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
+        public override void Update(GameTime gameTime, List<Sprite> gameObjectList)
         {
             _Rotation += 0.05f;
             float speed = 240.0f;

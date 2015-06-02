@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace MonoRider
 {
-    class GameCharacterBase
+    class Sprite
     {
         public Texture2D _Texture;
         public Vector2 _Position;
@@ -20,9 +20,9 @@ namespace MonoRider
         public bool _FlipX = false;
         public bool _FlipY = false;
         public bool _LockInScreen = false;
-        public List<GameCharacterBase> _ChildrenList;
+        public List<Sprite> _ChildrenList;
         public Color _MyColor = Color.White;
-        public GameCharacterBase parent = null;
+        public Sprite parent = null;
         private ContentManager content;
 
         public Vector2 _Center
@@ -47,7 +47,7 @@ namespace MonoRider
             _Texture = content.Load<Texture2D>(path);
         }
 
-        public virtual void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
+        public virtual void Update(GameTime gameTime, List<Sprite> gameObjectList)
         {
             if (_Active)
             {
@@ -55,7 +55,7 @@ namespace MonoRider
                 {
                     if (_ChildrenList.Count >= 1)
                     {
-                        foreach (GameCharacterBase child in _ChildrenList)
+                        foreach (Sprite child in _ChildrenList)
                         {
                             child.Update(gameTime, gameObjectList);
                         }
@@ -99,7 +99,7 @@ namespace MonoRider
                 {
                     if (_ChildrenList.Count >= 1)
                     {
-                        foreach (GameCharacterBase child in _ChildrenList)
+                        foreach (Sprite child in _ChildrenList)
                         {
                             child.Draw(spriteBatch);
                         }
@@ -124,23 +124,21 @@ namespace MonoRider
             _Draw = false;
         }
 
-        public void AddChild(GameCharacterBase child)
+        public void AddChild(Sprite child)
         {
             child.parent = this;
             _ChildrenList.Add(child);
         }
 
-        public void LockInBounds()
+        public virtual void LockInBounds()
         {
             if ((_Position.X - (_Texture.Width / 2)) <= 0)
             {
                 _Position.X = _Texture.Width / 2;
-                //momentum = 0;
             }
             if ((_Position.X + (_Texture.Width / 2)) > 320)
             {
                 _Position.X = 320 - (_Texture.Width / 2);
-                //momentum = 0;
             }
         }
 

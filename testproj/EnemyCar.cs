@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoRider
 {
-    class EnemyCar : GameCharacterBase
+    class EnemyCar : Sprite
     {
         public EnemyCar()
         {
@@ -18,7 +18,7 @@ namespace MonoRider
             //_MyColor = Color.Red;
         }
 
-        public override void Update(GameTime gameTime, List<GameCharacterBase> objs)
+        public override void Update(GameTime gameTime, List<Sprite> objs)
         {
             float speed = 240.0f;
             _Position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;

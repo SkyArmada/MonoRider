@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoRider
 {
-    class SteeringWheel : GameCharacterBase
+    class SteeringWheel : Sprite
     {
         public SteeringWheel()
         {

@@ -41,7 +41,7 @@
     <Compile Include="AnimatedTexture.cs" />
     <Compile Include="EnemyCar.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="GameCharacterBase.cs" />
+    <Compile Include="Sprite.cs" />
     <Compile Include="Gear.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

@@ -7,9 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 namespace MonoRider
 {
-    class Player : GameCharacterBase
+    class Player : Sprite
     {
         public float momentum = 0;
+        private float last_momentum = 0;
         bool spinOut = false;
         private int loops = 0;
         Gear testGear;
@@ -21,7 +22,7 @@ namespace MonoRider
             _LockInScreen = true;
             _zOrder = 15f;
             testGear = new Gear();
-            _ChildrenList = new List<GameCharacterBase>();
+            _ChildrenList = new List<Sprite>();
         }
 
         public override void LoadContent(string path, Microsoft.Xna.Framework.Content.ContentManager Content)
@@ -32,7 +33,7 @@ namespace MonoRider
             this.AddChild(testGear);
         }
 
-        public override void Update(GameTime gameTime, List<GameCharacterBase> gameObjectList)
+        public override void Update(GameTime gameTime, List<Sprite> gameObjectList)
         {
             if(_Active)
             {
@@ -61,7 +62,7 @@ namespace MonoRider
         private void handleMovement(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            float friction = 5.0f * delta;
+            float friction = 7.5f * delta;
             if (!spinOut)
             {
                 KeyboardState state = Keyboard.GetState();
@@ -88,7 +89,7 @@ namespace MonoRider
                 }
             }
             _Position.X = _Position.X + (momentum);
-
+            LockInBounds();
             if (momentum >= 0f)
             {
                 momentum -= friction;
@@ -97,11 +98,12 @@ namespace MonoRider
             {
                 momentum += friction;
             }
+            last_momentum = momentum;
         }
 
-        private void HandleCollistion(List<GameCharacterBase> gameObjectList)
+        private void HandleCollistion(List<Sprite> gameObjectList)
         {
-            foreach(GameCharacterBase obj in gameObjectList)
+            foreach(Sprite obj in gameObjectList)
             {
                 if(obj._Tag.Equals("player"))
                 {
@@ -115,6 +117,20 @@ namespace MonoRider
                         obj.ReceiveDamage(1);
                     }
                 }
+            }
+        }
+
+        public override void LockInBounds()
+        {
+            if ((_Position.X - (_Texture.Width / 2)) <= 0)
+            {
+                _Position.X = _Texture.Width / 2;
+                momentum = last_momentum;
+            }
+            if ((_Position.X + (_Texture.Width / 2)) > 320)
+            {
+                _Position.X = 320 - (_Texture.Width / 2);
+                momentum = last_momentum;
             }
         }
     }
