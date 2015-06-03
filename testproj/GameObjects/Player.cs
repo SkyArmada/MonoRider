@@ -16,11 +16,21 @@ namespace MonoRider
 
         public Player()
         {
+            Setup();
+        }
+
+        public override void Setup()
+        {
+            momentum = 0;
+            last_momentum = 0;
+            spinOut = false;
+            loops = 0;
             _HP = 1;
             _Tag = "player";
             _LockInScreen = true;
             _zOrder = 15f;
             _ChildrenList = new List<Sprite>();
+            speed = 100f;
         }
 
         public override void LoadContent(string path, Microsoft.Xna.Framework.Content.ContentManager Content)
@@ -120,10 +130,11 @@ namespace MonoRider
                     if (_BoundingBox.Intersects(obj._BoundingBox))
                     {
                         obj.ReceiveDamage(1);
+                        speed += 20f;
                     }
                 }
 
-                if(obj.Equals("enemycar") && obj._CurrentState == SpriteState.kStateActive)
+                if(obj._Tag.Equals("enemycar") && obj._CurrentState == SpriteState.kStateActive)
                 {
                     if(_BoundingBox.Intersects(obj._BoundingBox))
                     {
@@ -145,21 +156,6 @@ namespace MonoRider
                 _Position.X = 320 - (_Texture.Width / 2);
                 momentum = last_momentum;
             }
-        }
-
-        public override void ResetSelf()
-        {
-            base.ResetSelf();
-            
-            momentum = 0;
-            last_momentum = 0;
-            spinOut = false;
-            loops = 0;
-            _HP = 1;
-            _Tag = "player";
-            _LockInScreen = true;
-            _zOrder = 15f;
-            _ChildrenList = new List<Sprite>();
         }
     }
 }

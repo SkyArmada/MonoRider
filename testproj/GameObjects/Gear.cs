@@ -11,6 +11,11 @@ namespace MonoRider
     {
         public Gear()
         {
+            Setup();
+        }
+
+        public override void Setup()
+        {
             _HP = 1;
             _Tag = "gear";
             _zOrder = 1f;
@@ -19,7 +24,6 @@ namespace MonoRider
         public override void Update(GameTime gameTime, List<Sprite> gameObjectList)
         {
             _Rotation += 0.05f;
-            float speed = 240.0f;
             _Position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Random num = new Random();
             if (_Position.Y > 500)
@@ -28,14 +32,6 @@ namespace MonoRider
                 _Position.X = num.Next(320 - _Texture.Width);
             }
             base.Update(gameTime, gameObjectList);
-        }
-
-        public override void ResetSelf()
-        {
-            base.ResetSelf();
-            _HP = 1;
-            _Tag = "gear";
-            _zOrder = 1f;
         }
     }
 }

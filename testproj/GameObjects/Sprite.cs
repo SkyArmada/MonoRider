@@ -23,7 +23,8 @@ namespace MonoRider
         public Color _MyColor = Color.White;
         public Sprite parent = null;
         private ContentManager content;
-
+        public float speed = 0f;
+        public int midpoint = 85;
         public enum SpriteState
         {
             kStateActive,
@@ -150,6 +151,11 @@ namespace MonoRider
             }
         }
 
+        public void Live()
+        {
+            _CurrentState = SpriteState.kStateActive;
+            _Draw = true;
+        }
         public void ChangeColor(Color searchColor, Color toColor)
         {
             Color[] data = new Color[_Texture.Width * _Texture.Height];
@@ -176,11 +182,25 @@ namespace MonoRider
             _Scale = 1.0f;
             _FlipX = false;
             _FlipY = false;
-            _LockInScreen = false;
-            _ChildrenList = null;
+            _LockInScreen = false; 
+            if (_ChildrenList != null)
+            {
+                if (_ChildrenList.Count >= 1)
+                {
+                    _ChildrenList.Clear();
+                }
+            }
             _MyColor = Color.White;
             parent = null;
             content = null;
+            speed = 0f; 
+            midpoint = 85;
+            Setup();
+        }
+
+        public virtual void Setup()
+        {
+
         }
     }
 }

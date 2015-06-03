@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/Graphics/grassBackground.png</SourceFile>
-  <SourceTime>2015-05-28T09:40:02.5390104-05:00</SourceTime>
+  <SourceTime>2015-06-03T14:19:50.6219116-05:00</SourceTime>
   <DestFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/bin/Windows/Graphics/grassBackground.xnb</DestFile>
-  <DestTime>2015-06-02T10:20:14.8898387-05:00</DestTime>
+  <DestTime>2015-06-03T14:19:57.2938707-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T12:14:44-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

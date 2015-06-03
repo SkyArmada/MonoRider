@@ -14,7 +14,7 @@ namespace MonoRider
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ContentManager CM_Play;
-        ContentManager CM_GO;
+        //ContentManager CM_GO;
         Player player;
         List<Sprite> GameObjectList;
         Texture2D background;
@@ -22,6 +22,12 @@ namespace MonoRider
         bool debug = false;
         bool paused = false;
         bool pausedPressed = false;
+        float playerSpeed = 0f;
+        int midPoint;
+        bool moveRight = false;
+        bool moveLeft = false;
+        bool moveCenter = false;
+        Random Ranum = new Random();
 
         enum GamePlayState
         {
@@ -69,6 +75,7 @@ namespace MonoRider
 
                 // TODO: use this.Content to load your game content here
                 background = CM_Play.Load<Texture2D>("Graphics\\grassBackground");
+                midPoint = (GraphicsDevice.Viewport.Width / 2);
 
                 player.LoadContent("Graphics\\car2", CM_Play);
                 player._Position = new Vector2(GraphicsDevice.Viewport.Width / 2, 320);
@@ -76,18 +83,16 @@ namespace MonoRider
 
                 wheel.LoadContent("Graphics\\wheel", CM_Play);
                 wheel._Position = new Vector2(160, 520);
-
-                Random num = new Random();
-
+                
                 for (int i = 0; i < 30; i++)
                 {
                     Gear gear = new Gear();
                     gear.LoadContent("Graphics\\gear1", CM_Play);
-                    gear._Position = new Vector2(num.Next(320), -10 * num.Next(250));
+                    gear._Position = new Vector2(Ranum.Next(320), -10 * Ranum.Next(250));
 
-                    if (i > 10)
+                    if (i > 3)
                     {
-                        gear._CurrentState = Sprite.SpriteState.kStateInActive;
+                        gear._CurrentState = Sprite.SpriteState.kStateDead;
                     }
                     GameObjectList.Add(gear);
                 }
@@ -100,7 +105,15 @@ namespace MonoRider
                     if (i < 6)
                     {
                         car._CurrentState = Sprite.SpriteState.kStateActive;
-                        car._Position = new Vector2(num.Next(320), -10 * num.Next(250));
+                        car._Position.Y = -10 * Ranum.Next(250);
+                        if (Ranum.Next(0, 2) == 0)
+                        {
+                            car._Position.X = midPoint + Ranum.Next(85 - car._Texture.Width/2);
+                        }
+                        else
+                        {
+                            car._Position.X = midPoint - Ranum.Next(85 + car._Texture.Width/2);
+                        }
                         //car.ChangeColor(new Color(213, 255, 28, 255), new Color(num.Next(255),num.Next(255),num.Next(255),255));
                     }
                     else
@@ -136,9 +149,101 @@ namespace MonoRider
                 // TODO: Add your update logic here
                 foreach (Sprite obj in GameObjectList)
                 {
+                    bool createGear = false;
+                    if(Ranum.Next(0,600) == 0)
+                    {
+                        createGear = true;
+                    }
+                    if(createGear && obj._Tag.Equals("gear") && obj._CurrentState == Sprite.SpriteState.kStateDead)
+                    {
+                        obj.Live();
+                        createGear = false;
+                    }
+                    if(obj._Tag.Equals("player"))
+                    {
+                        playerSpeed = obj.speed;
+                    }
+                    else
+                    {
+                        obj.speed = playerSpeed;
+                    }
+                    if(obj._Tag.Equals("enemycar"))
+                    {
+                        if(moveRight)
+                        {
+                            obj._Position.X++;
+                        }
+                        else if(moveLeft)
+                        {
+                            obj._Position.X--;
+                        }
+                        else if(moveCenter)
+                        {
+                            if(obj._Center.X < GraphicsDevice.Viewport.Width/2)
+                            {
+                                obj._Position.X++;
+                            }
+                            else if(obj._Center.X > GraphicsDevice.Viewport.Width/2)
+                            {
+                                obj._Position.X--;
+                            }
+                        }
+                    }
+                    obj.midpoint = midPoint;
                     obj.Update(gameTime, GameObjectList);
                 }
                 wheel.Update(gameTime, player.momentum);
+                if(Ranum.Next(0,1200) == 0 && moveRight == false)
+                {
+                    moveRight = true;
+                }
+                if(Ranum.Next(0,1200) == 0 && moveLeft == false)
+                {
+                    moveLeft = true;
+                }
+                if (Ranum.Next(0, 1200) == 0 && moveCenter == false)
+                {
+                    moveCenter = true;
+                }
+                if(moveRight)
+                {
+                    int test = (midPoint + 85);
+                    if( test <= GraphicsDevice.Viewport.Width)
+                    {
+                        midPoint++;
+                    }
+                    else
+                    {
+                        moveRight = false;
+                    }
+                }
+                else if(moveLeft)
+                {
+                    int test = (midPoint - 85);
+                    if ( test >= 0)
+                    {
+                        midPoint--;
+                    }
+                    else
+                    {
+                        moveLeft = false;
+                    }
+                }
+                else if(moveCenter)
+                {
+                    if(midPoint < GraphicsDevice.Viewport.Width/2)
+                    {
+                        midPoint++;
+                    }
+                    else if(midPoint > GraphicsDevice.Viewport.Width/2)
+                    {
+                        midPoint--;
+                    }
+                    else if(midPoint == GraphicsDevice.Viewport.Width/2)
+                    {
+                        moveCenter = false;
+                    }
+                }
                 base.Update(gameTime);
             }
             if(player._CurrentState == Sprite.SpriteState.kStateDead)
@@ -171,8 +276,9 @@ namespace MonoRider
 
                 // Sprite effects! https://msdn.microsoft.com/en-us/library/bb203872(v=xnagamestudio.40).aspx
             }
-            spriteBatch.Draw(background, new Rectangle(0, 0, 320, 480), Color.White);
-
+            //spriteBatch.Draw(background, new Rectangle(midPoint-160, 0, 320, 480), Color.White);
+            float test = midPoint - (background.Width/2);
+            spriteBatch.Draw(background, new Vector2(test, 0), Color.White);
 
             // Draw the Player
             foreach (Sprite obj in GameObjectList)
@@ -212,6 +318,10 @@ namespace MonoRider
             {
                 pausedPressed = false;
             }
+            if(state.IsKeyDown(Keys.End))
+            {
+                ResetGame();
+            }
         }
 
         private void ResetGame()
@@ -221,7 +331,17 @@ namespace MonoRider
                 obj.ResetSelf();
             }
             this.UnloadContent();
-            GameObjectList.Clear();
+            if (GameObjectList.Count >= 1)
+            {
+                GameObjectList.Clear();
+            }
+            paused = false;
+            pausedPressed = false;
+            playerSpeed = 0f;
+            midPoint = -85;
+            moveRight = false;
+            moveLeft = false;
+            Ranum = new Random();
             this.LoadContent();
         }
     }

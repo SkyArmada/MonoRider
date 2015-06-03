@@ -11,33 +11,35 @@ namespace MonoRider
     {
         public EnemyCar()
         {
+            Setup();
+        }
+
+        public override void Setup()
+        {
             _HP = 1;
             _Tag = "enemycar";
             _FlipY = true;
             _zOrder = 2f;
-            //_MyColor = Color.Red;
+            speed += 100;
+            midpoint = 85;
         }
 
         public override void Update(GameTime gameTime, List<Sprite> objs)
         {
-            float speed = 240.0f;
             _Position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Random num = new Random();
             if (_Position.Y > 500)
             {
                 _Position.Y = -10 * num.Next(250);
-                _Position.X = num.Next(320 - _Texture.Width);
+                if (num.Next(0, 2) == 0)
+                {
+                    _Position.X = midpoint + num.Next(85 - _Texture.Width/2);
+                }
+                else
+                {
+                    _Position.X = midpoint - num.Next(85 + _Texture.Width/2);
+                }
             }
-        }
-
-        public override void ResetSelf()
-        {
-            base.ResetSelf();
-            _HP = 1;
-            _Tag = "enemycar";
-            _FlipY = true;
-            _zOrder = 2f;
-            //_MyColor = Color.Red;
         }
     }
 }
