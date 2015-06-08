@@ -111,3 +111,5 @@ C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\SharpDX.Direct3D9
 C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\testProj.exe
 C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\testProj.pdb
 C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\MonoRider.csprojResolveAssemblyReference.cache
+C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\rock.xnb
+C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\car1.xnb

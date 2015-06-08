@@ -34,8 +34,8 @@ namespace MonoRider
             kStatePlay,
             kStateGO
         };
-
         GamePlayState currentState = GamePlayState.kStatePlay;
+
         public GamePlayScene()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -77,51 +77,35 @@ namespace MonoRider
                 background = CM_Play.Load<Texture2D>("Graphics\\grassBackground");
                 midPoint = (GraphicsDevice.Viewport.Width / 2);
 
-                player.LoadContent("Graphics\\car2", CM_Play);
+                player.LoadContent("Graphics\\car1", CM_Play);
                 player._Position = new Vector2(GraphicsDevice.Viewport.Width / 2, 320);
+                player.parentScene = this;
                 GameObjectList.Add(player);
 
                 wheel.LoadContent("Graphics\\wheel", CM_Play);
                 wheel._Position = new Vector2(160, 520);
                 
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     Gear gear = new Gear();
                     gear.LoadContent("Graphics\\gear1", CM_Play);
-                    gear._Position = new Vector2(Ranum.Next(320), -10 * Ranum.Next(250));
-
-                    if (i > 3)
-                    {
-                        gear._CurrentState = Sprite.SpriteState.kStateDead;
-                    }
+                    gear.parentScene = this;
                     GameObjectList.Add(gear);
                 }
 
-                for (int i = 0; i <= 30; i++)
+                for (int i = 0; i <= 10; i++)
                 {
                     EnemyCar car = new EnemyCar();
                     car.LoadContent("Graphics\\car2", CM_Play);
-
-                    if (i < 6)
-                    {
-                        car._CurrentState = Sprite.SpriteState.kStateActive;
-                        car._Position.Y = -10 * Ranum.Next(250);
-                        if (Ranum.Next(0, 2) == 0)
-                        {
-                            car._Position.X = midPoint + Ranum.Next(85 - car._Texture.Width/2);
-                        }
-                        else
-                        {
-                            car._Position.X = midPoint - Ranum.Next(85 + car._Texture.Width/2);
-                        }
-                        //car.ChangeColor(new Color(213, 255, 28, 255), new Color(num.Next(255),num.Next(255),num.Next(255),255));
-                    }
-                    else
-                    {
-                        car._CurrentState = Sprite.SpriteState.kStateInActive;
-                        car._Position = new Vector2(-500, -500);
-                    }
+                    car.parentScene = this;
                     GameObjectList.Add(car);
+                }
+                for(int i = 0; i <= 5; i++)
+                {
+                    Rock hydrant = new Rock();
+                    hydrant.LoadContent("Graphics\\rock", CM_Play);
+                    hydrant.parentScene = this;
+                    GameObjectList.Add(hydrant);
                 }
             }
         }
@@ -144,22 +128,28 @@ namespace MonoRider
         protected override void Update(GameTime gameTime)
         {
             HandleInput();
+            if(Ranum.Next(0, 90) == 0)
+            {
+                int ran = Ranum.Next(0, 3);
+                if(ran == 0)
+                {
+                    PlaceObject(Sprite.SpriteType.kGearType);
+                }
+                else if(ran == 1)
+                {
+                    PlaceObject(Sprite.SpriteType.kCarType);
+                }
+                else if(ran == 2)
+                {
+                    PlaceObject(Sprite.SpriteType.kRockType);
+                }
+            }
             if (!paused)
             {
                 // TODO: Add your update logic here
                 foreach (Sprite obj in GameObjectList)
                 {
-                    bool createGear = false;
-                    if(Ranum.Next(0,600) == 0)
-                    {
-                        createGear = true;
-                    }
-                    if(createGear && obj._Tag.Equals("gear") && obj._CurrentState == Sprite.SpriteState.kStateDead)
-                    {
-                        obj.Live();
-                        createGear = false;
-                    }
-                    if(obj._Tag.Equals("player"))
+                    if(obj._Tag == Sprite.SpriteType.kPlayerType)
                     {
                         playerSpeed = obj.speed;
                     }
@@ -167,86 +157,13 @@ namespace MonoRider
                     {
                         obj.speed = playerSpeed;
                     }
-                    if(obj._Tag.Equals("enemycar"))
-                    {
-                        if(moveRight)
-                        {
-                            obj._Position.X++;
-                        }
-                        else if(moveLeft)
-                        {
-                            obj._Position.X--;
-                        }
-                        else if(moveCenter)
-                        {
-                            if(obj._Center.X < GraphicsDevice.Viewport.Width/2)
-                            {
-                                obj._Position.X++;
-                            }
-                            else if(obj._Center.X > GraphicsDevice.Viewport.Width/2)
-                            {
-                                obj._Position.X--;
-                            }
-                        }
-                    }
-                    obj.midpoint = midPoint;
                     obj.Update(gameTime, GameObjectList);
                 }
                 wheel.Update(gameTime, player.momentum);
-                if(Ranum.Next(0,1200) == 0 && moveRight == false)
-                {
-                    moveRight = true;
-                }
-                if(Ranum.Next(0,1200) == 0 && moveLeft == false)
-                {
-                    moveLeft = true;
-                }
-                if (Ranum.Next(0, 1200) == 0 && moveCenter == false)
-                {
-                    moveCenter = true;
-                }
-                if(moveRight)
-                {
-                    int test = (midPoint + 85);
-                    if( test <= GraphicsDevice.Viewport.Width)
-                    {
-                        midPoint++;
-                    }
-                    else
-                    {
-                        moveRight = false;
-                    }
-                }
-                else if(moveLeft)
-                {
-                    int test = (midPoint - 85);
-                    if ( test >= 0)
-                    {
-                        midPoint--;
-                    }
-                    else
-                    {
-                        moveLeft = false;
-                    }
-                }
-                else if(moveCenter)
-                {
-                    if(midPoint < GraphicsDevice.Viewport.Width/2)
-                    {
-                        midPoint++;
-                    }
-                    else if(midPoint > GraphicsDevice.Viewport.Width/2)
-                    {
-                        midPoint--;
-                    }
-                    else if(midPoint == GraphicsDevice.Viewport.Width/2)
-                    {
-                        moveCenter = false;
-                    }
-                }
                 base.Update(gameTime);
             }
-            if(player._CurrentState == Sprite.SpriteState.kStateDead)
+
+            if(player._CurrentState == Sprite.SpriteState.kStateInActive)
             {
                 this.ResetGame();
             }
@@ -324,6 +241,18 @@ namespace MonoRider
             }
         }
 
+        public void PlaceObject(Sprite.SpriteType type)
+        {
+            foreach (Sprite obj in GameObjectList)
+            {
+                if (obj._Tag != type) continue;
+                if (obj._CurrentState != Sprite.SpriteState.kStateInActive) continue;
+                obj.Activate();
+                return;
+            }
+            //sprite not found. gotta create one.
+        }
+
         private void ResetGame()
         {
             foreach(Sprite obj in GameObjectList)
@@ -338,7 +267,7 @@ namespace MonoRider
             paused = false;
             pausedPressed = false;
             playerSpeed = 0f;
-            midPoint = -85;
+            midPoint = GraphicsDevice.Viewport.Width / 2;
             moveRight = false;
             moveLeft = false;
             Ranum = new Random();

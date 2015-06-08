@@ -7,9 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoRider
 {
-    class Gear : Sprite
+    class Rock : Sprite
     {
-        public Gear()
+
+        public Rock()
         {
             _Position = new Vector2(-500, -500);
             Setup();
@@ -18,7 +19,7 @@ namespace MonoRider
         public override void Setup()
         {
             _HP = 1;
-            _Tag = SpriteType.kGearType;
+            _Tag = SpriteType.kRockType;
             _zOrder = 1f;
         }
 
@@ -26,7 +27,6 @@ namespace MonoRider
         {
             if (_CurrentState != SpriteState.kStateActive) return;
 
-            _Rotation += 0.05f;
             _Position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_Position.Y > 500)
             {

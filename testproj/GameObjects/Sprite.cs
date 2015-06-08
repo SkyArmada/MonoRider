@@ -6,13 +6,12 @@ using Microsoft.Xna.Framework.Content;
 
 namespace MonoRider
 {
-    class Sprite
+    public class Sprite
     {
         public Texture2D _Texture;
         public Vector2 _Position;
         public bool _Draw = true;
         public int _HP;
-        public string _Tag = "base";
         public float _Rotation = 0.0f;
         public float _zOrder;
         public float _Scale = 1.0f;
@@ -24,16 +23,26 @@ namespace MonoRider
         public Sprite parent = null;
         private ContentManager content;
         public float speed = 0f;
-        public int midpoint = 85;
+        public int midpoint = 160;
+        public GamePlayScene parentScene = null;
+
         public enum SpriteState
         {
             kStateActive,
-            kStateDead,
             kStateInActive
         }
+        public SpriteState _CurrentState = SpriteState.kStateInActive;
 
-        public SpriteState _CurrentState = SpriteState.kStateActive;
-
+        public enum SpriteType
+        {
+            kPlayerType,
+            kGearType,
+            kCarType,
+            kRockType,
+            kWheelType,
+            kNoneType
+        }
+        public SpriteType _Tag = SpriteType.kNoneType;
         public Vector2 _Center
         {
             get
@@ -75,10 +84,6 @@ namespace MonoRider
                 {
                     LockInBounds();
                 }
-            }
-            else
-            {
-                _Position = new Vector2(-500, -500);
             }
         }
 
@@ -129,7 +134,7 @@ namespace MonoRider
 
         private void Die()
         {
-            _CurrentState = SpriteState.kStateDead;
+            _CurrentState = SpriteState.kStateInActive;
             _Draw = false;
         }
 
@@ -149,12 +154,6 @@ namespace MonoRider
             {
                 _Position.X = 320 - (_Texture.Width / 2);
             }
-        }
-
-        public void Live()
-        {
-            _CurrentState = SpriteState.kStateActive;
-            _Draw = true;
         }
         public void ChangeColor(Color searchColor, Color toColor)
         {
@@ -177,7 +176,7 @@ namespace MonoRider
             _Position = Vector2.Zero;
             _Draw = true;
             _CurrentState = SpriteState.kStateActive;
-            _Tag = "base";
+            _Tag = SpriteType.kNoneType;
             _Rotation = 0.0f;
             _Scale = 1.0f;
             _FlipX = false;
@@ -201,6 +200,12 @@ namespace MonoRider
         public virtual void Setup()
         {
 
+        }
+
+        public virtual void Activate()
+        {
+            _CurrentState = SpriteState.kStateActive;
+            _Draw = true;
         }
     }
 }

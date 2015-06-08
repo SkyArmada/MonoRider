@@ -12,7 +12,7 @@ namespace MonoRider
         public SteeringWheel()
         {
             _HP = 1;
-            _Tag = "steeringwheel";
+            _Tag = SpriteType.kWheelType;
             _zOrder = 20f;
         }
 

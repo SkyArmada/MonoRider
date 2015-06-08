@@ -26,7 +26,7 @@ namespace MonoRider
             spinOut = false;
             loops = 0;
             _HP = 1;
-            _Tag = "player";
+            _Tag = SpriteType.kPlayerType;
             _LockInScreen = true;
             _zOrder = 15f;
             _ChildrenList = new List<Sprite>();
@@ -71,11 +71,11 @@ namespace MonoRider
             {
                 KeyboardState state = Keyboard.GetState();
                 int momentumGain = 15;
-                if (state.IsKeyDown(Keys.A))
+                if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
                 {
                     momentum -= momentumGain * delta;
                 }
-                else if (state.IsKeyDown(Keys.D))
+                else if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
                 {
                     momentum += momentumGain * delta;
                 }
@@ -120,21 +120,21 @@ namespace MonoRider
         {
             foreach(Sprite obj in gameObjectList)
             {
-                if(obj._Tag.Equals("player"))
+                if(obj._Tag == SpriteType.kPlayerType)
                 {
                     continue;
                 }
 
-                if(obj._Tag.Equals("gear") && obj._CurrentState == SpriteState.kStateActive)
+                if(obj._Tag == SpriteType.kGearType && obj._CurrentState == SpriteState.kStateActive)
                 {
                     if (_BoundingBox.Intersects(obj._BoundingBox))
                     {
                         obj.ReceiveDamage(1);
-                        speed += 20f;
+                        speed += 10f;
                     }
                 }
 
-                if(obj._Tag.Equals("enemycar") && obj._CurrentState == SpriteState.kStateActive)
+                if((obj._Tag == SpriteType.kCarType || obj._Tag == SpriteType.kRockType) && obj._CurrentState == SpriteState.kStateActive)
                 {
                     if(_BoundingBox.Intersects(obj._BoundingBox))
                     {
