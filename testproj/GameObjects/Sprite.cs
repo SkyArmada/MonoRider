@@ -40,6 +40,7 @@ namespace MonoRider
             kCarType,
             kRockType,
             kWheelType,
+            kShieldType,
             kNoneType
         }
         public SpriteType _Tag = SpriteType.kNoneType;
@@ -193,7 +194,7 @@ namespace MonoRider
             parent = null;
             content = null;
             speed = 0f; 
-            midpoint = 85;
+            midpoint = 160;
             Setup();
         }
 

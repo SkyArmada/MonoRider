@@ -38,7 +38,7 @@ namespace MonoRider
         public override void Activate()
         {
             Random num = new Random();
-            _Position.Y = -10 * num.Next(250);
+            _Position.Y = -num.Next(11) * num.Next(250);
             _Position.X = num.Next(320 - _Texture.Width);
             base.Activate();
         }

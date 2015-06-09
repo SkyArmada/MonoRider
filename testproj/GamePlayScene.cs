@@ -24,9 +24,9 @@ namespace MonoRider
         bool pausedPressed = false;
         float playerSpeed = 0f;
         int midPoint;
-        bool moveRight = false;
-        bool moveLeft = false;
-        bool moveCenter = false;
+        //bool moveRight = false;
+        //bool moveLeft = false;
+        //bool moveCenter = false;
         Random Ranum = new Random();
 
         enum GamePlayState
@@ -107,6 +107,13 @@ namespace MonoRider
                     hydrant.parentScene = this;
                     GameObjectList.Add(hydrant);
                 }
+                for (int i = 0; i <= 2; i++)
+                {
+                    Shield shield = new Shield();
+                    shield.LoadContent("Graphics\\car1", CM_Play);
+                    shield.parentScene = this;
+                    GameObjectList.Add(shield);
+                }
             }
         }
 
@@ -128,24 +135,28 @@ namespace MonoRider
         protected override void Update(GameTime gameTime)
         {
             HandleInput();
-            if(Ranum.Next(0, 90) == 0)
-            {
-                int ran = Ranum.Next(0, 3);
-                if(ran == 0)
-                {
-                    PlaceObject(Sprite.SpriteType.kGearType);
-                }
-                else if(ran == 1)
-                {
-                    PlaceObject(Sprite.SpriteType.kCarType);
-                }
-                else if(ran == 2)
-                {
-                    PlaceObject(Sprite.SpriteType.kRockType);
-                }
-            }
             if (!paused)
             {
+                if(Ranum.Next(0, (101 - ((int)playerSpeed/10))) == 0)
+                {
+                    int ran = Ranum.Next(0, 100);
+                    if(ran <= 24)
+                    {
+                        PlaceObject(Sprite.SpriteType.kGearType);
+                    }
+                    else if(ran >= 25 && ran <= 64)
+                    {
+                        PlaceObject(Sprite.SpriteType.kCarType);
+                    }
+                    else if(ran >= 65 && ran <= 90)
+                    {
+                        PlaceObject(Sprite.SpriteType.kRockType);
+                    }
+                    else if(ran >= 91)
+                    {
+                        PlaceObject(Sprite.SpriteType.kShieldType);
+                    }
+                }
                 // TODO: Add your update logic here
                 foreach (Sprite obj in GameObjectList)
                 {
@@ -268,8 +279,8 @@ namespace MonoRider
             pausedPressed = false;
             playerSpeed = 0f;
             midPoint = GraphicsDevice.Viewport.Width / 2;
-            moveRight = false;
-            moveLeft = false;
+            //moveRight = false;
+            //moveLeft = false;
             Ranum = new Random();
             this.LoadContent();
         }

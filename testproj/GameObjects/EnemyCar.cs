@@ -55,7 +55,7 @@ namespace MonoRider
         public override void Activate()
         {
             Random num = new Random();
-            _Position.Y = -10 * num.Next(250);
+            _Position.Y = -num.Next(11) * num.Next(250);
             if (num.Next(0, 2) == 0)
             {
                 _Position.X = midpoint - (num.Next(80));

@@ -12,6 +12,7 @@ namespace MonoRider
         public float momentum = 0;
         private float last_momentum = 0;
         bool spinOut = false;
+        bool shielded = false;
         private int loops = 0;
 
         public Player()
@@ -138,7 +139,25 @@ namespace MonoRider
                 {
                     if(_BoundingBox.Intersects(obj._BoundingBox))
                     {
-                        this.ReceiveDamage(1);
+                        if (this.shielded)
+                        {
+                            this.shielded = false;
+                            this.ChangeColor(new Color(255, 255, 255, 255), new Color(213, 255, 28, 255));
+                        }
+                        else
+                        {
+                            this.ReceiveDamage(1);
+                        }
+                    }
+                }
+
+                if(obj._Tag == SpriteType.kShieldType && obj._CurrentState == SpriteState.kStateActive)
+                {
+                    if(this._BoundingBox.Intersects(obj._BoundingBox))
+                    {
+                        obj.ReceiveDamage(1);
+                        this.shielded = true;
+                        this.ChangeColor(new Color(213, 255, 28, 255), new Color(255, 255, 255, 255));
                     }
                 }
             }

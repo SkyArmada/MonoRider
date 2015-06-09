@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoRider
 {
-    class Rock : Sprite
+    class Shield : Sprite
     {
-
-        public Rock()
+        public Shield()
         {
-            _Position = new Vector2(-500, -500);
             Setup();
         }
 
         public override void Setup()
         {
             _HP = 1;
-            _Tag = SpriteType.kRockType;
+            _Tag = SpriteType.kShieldType;
             _zOrder = 1f;
         }
 
