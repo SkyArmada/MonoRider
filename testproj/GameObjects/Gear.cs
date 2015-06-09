@@ -11,12 +11,12 @@ namespace MonoRider
     {
         public Gear()
         {
-            _Position = new Vector2(-500, -500);
             Setup();
         }
 
         public override void Setup()
         {
+            _Position = new Vector2(-500, -500);
             _HP = 1;
             _Tag = SpriteType.kGearType;
             _zOrder = 1f;
@@ -39,7 +39,7 @@ namespace MonoRider
         {
             Random num = new Random();
             _Position.Y = -num.Next(11) * num.Next(250);
-            _Position.X = num.Next(320 - _Texture.Width);
+            _Position.X = num.Next(320 - frameWidth);
             base.Activate();
         }
     }

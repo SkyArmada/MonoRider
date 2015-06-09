@@ -32,11 +32,13 @@ namespace MonoRider
             _zOrder = 15f;
             _ChildrenList = new List<Sprite>();
             speed = 100f;
+            isAnimated = true;
         }
 
         public override void LoadContent(string path, Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             base.LoadContent(path, Content);
+            base.SetupAnimation(5, 30, 1, true);
         }
 
         public override void Update(GameTime gameTime, List<Sprite> gameObjectList)
@@ -61,6 +63,7 @@ namespace MonoRider
                     }
                 }
             }
+            Animate(0);
             base.Update(gameTime, gameObjectList);
         }
 
@@ -143,9 +146,11 @@ namespace MonoRider
                         {
                             this.shielded = false;
                             this.ChangeColor(new Color(255, 255, 255, 255), new Color(213, 255, 28, 255));
+                            obj.ReceiveDamage(1);
                         }
                         else
                         {
+                            obj.ReceiveDamage(1);
                             this.ReceiveDamage(1);
                         }
                     }
@@ -165,14 +170,14 @@ namespace MonoRider
 
         public override void LockInBounds()
         {
-            if ((_Position.X - (_Texture.Width / 2)) <= 0)
+            if ((_Position.X - (frameWidth / 2)) <= 0)
             {
-                _Position.X = _Texture.Width / 2;
+                _Position.X = frameWidth / 2;
                 momentum = last_momentum;
             }
-            if ((_Position.X + (_Texture.Width / 2)) > 320)
+            if ((_Position.X + (frameWidth / 2)) > 320)
             {
-                _Position.X = 320 - (_Texture.Width / 2);
+                _Position.X = 320 - (frameWidth / 2);
                 momentum = last_momentum;
             }
         }

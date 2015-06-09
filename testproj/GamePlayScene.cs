@@ -137,7 +137,8 @@ namespace MonoRider
             HandleInput();
             if (!paused)
             {
-                if(Ranum.Next(0, (101 - ((int)playerSpeed/10))) == 0)
+                int chancePerSecond = 101 - ((int)playerSpeed / 10);
+                if(Ranum.Next(0, chancePerSecond) == 0)
                 {
                     int ran = Ranum.Next(0, 100);
                     if(ran <= 24)
@@ -177,6 +178,7 @@ namespace MonoRider
             if(player._CurrentState == Sprite.SpriteState.kStateInActive)
             {
                 this.ResetGame();
+                
             }
         }
 

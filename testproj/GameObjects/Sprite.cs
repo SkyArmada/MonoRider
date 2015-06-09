@@ -12,19 +12,32 @@ namespace MonoRider
         public Vector2 _Position;
         public bool _Draw = true;
         public int _HP;
-        public float _Rotation = 0.0f;
-        public float _zOrder;
-        public float _Scale = 1.0f;
-        public bool _FlipX = false;
-        public bool _FlipY = false;
         public bool _LockInScreen = false;
-        public List<Sprite> _ChildrenList;
-        public Color _MyColor = Color.White;
-        public Sprite parent = null;
         private ContentManager content;
         public float speed = 0f;
         public int midpoint = 160;
+
+        //for inheritance
+        public Sprite parent = null;
         public GamePlayScene parentScene = null;
+        public List<Sprite> _ChildrenList;
+
+        //for animation
+        private float timeElapsed = 0;
+        private int frameNum = 0;
+        public int frameWidth;
+        public int frameHeight;
+        int FPS = 1;
+        int Frames = 1;
+        int StateNum;
+        bool animLooping = false;
+        public bool _FlipX = false;
+        public bool _FlipY = false;
+        public float _zOrder;
+        public float _Scale = 1.0f;
+        public Color _MyColor = Color.White;
+        public float _Rotation = 0.0f;
+        public bool isAnimated = false;
 
         public enum SpriteState
         {
@@ -44,11 +57,12 @@ namespace MonoRider
             kNoneType
         }
         public SpriteType _Tag = SpriteType.kNoneType;
+
         public Vector2 _Center
         {
             get
             {
-                return new Vector2(_Texture.Width / 2, _Texture.Height / 2);
+                return new Vector2(frameWidth / 2, frameHeight / 2);
             }
         }
 
@@ -56,7 +70,7 @@ namespace MonoRider
         {
             get
             {
-                return new Rectangle((int)_Position.X, (int)_Position.Y, _Texture.Width, _Texture.Height);
+                return new Rectangle((int)_Position.X, (int)_Position.Y, frameWidth, frameHeight);
             }
         }
 
@@ -64,6 +78,10 @@ namespace MonoRider
         {
             content = Content;
             _Texture = content.Load<Texture2D>(path);
+            if(!isAnimated)
+            {
+                SetupAnimation(1, 1, 1, false);
+            }
         }
 
         public virtual void Update(GameTime gameTime, List<Sprite> gameObjectList)
@@ -86,13 +104,43 @@ namespace MonoRider
                     LockInBounds();
                 }
             }
+            timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+
+        public void SetupAnimation(int frames, int fps, int states, bool looping)
+        {
+            Frames = frames;
+            FPS = fps;
+            frameWidth = _Texture.Width / frames;
+            frameHeight = _Texture.Height / states;
+            animLooping = looping;
+        }
+
+        public void Animate(int stateNum)
+        {
+            float TPF = 1.0f / FPS;
+            if(timeElapsed >= TPF)
+            {
+                frameNum++;
+                if (animLooping && frameNum > Frames) 
+                { 
+                    frameNum = 0; 
+                }
+                else
+                {
+
+                }
+                frameNum %= Frames;
+                timeElapsed -= TPF;
+            }
+            StateNum = stateNum;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (_Draw)
             {
-                Rectangle sr = new Rectangle(0, 0, _Texture.Width, _Texture.Height);
+                Rectangle sr = new Rectangle((frameWidth * frameNum), (frameHeight * StateNum), frameWidth, frameHeight);
                 if(!_FlipX && !_FlipY)
                 {
                     spriteBatch.Draw(_Texture, _Position, sr, _MyColor, _Rotation, _Center, _Scale, SpriteEffects.None, 0f);
@@ -147,13 +195,13 @@ namespace MonoRider
 
         public virtual void LockInBounds()
         {
-            if ((_Position.X - (_Texture.Width / 2)) <= 0)
+            if ((_Position.X - (frameWidth / 2)) <= 0)
             {
-                _Position.X = _Texture.Width / 2;
+                _Position.X = frameWidth / 2;
             }
-            if ((_Position.X + (_Texture.Width / 2)) > 320)
+            if ((_Position.X + (frameWidth / 2)) > 320)
             {
-                _Position.X = 320 - (_Texture.Width / 2);
+                _Position.X = 320 - (frameWidth / 2);
             }
         }
         public void ChangeColor(Color searchColor, Color toColor)

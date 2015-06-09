@@ -11,7 +11,6 @@ namespace MonoRider
     {
         public EnemyCar()
         {
-            _Position = new Vector2(-500, -500);
             Setup();
         }
 
@@ -23,6 +22,13 @@ namespace MonoRider
             _zOrder = 2f;
             speed += 100;
             midpoint = 160;
+            _Position = new Vector2(-500, -500);
+        }
+
+        public override void LoadContent(string path, Microsoft.Xna.Framework.Content.ContentManager Content)
+        {
+            base.LoadContent(path, Content);
+            base.SetupAnimation(1, 1, 1, true);
         }
 
         public override void Update(GameTime gameTime, List<Sprite> gameObjectList)
@@ -40,10 +46,8 @@ namespace MonoRider
             {
                 if (obj._Tag != SpriteType.kCarType) continue;
                 if (obj._CurrentState != SpriteState.kStateActive) continue;
-                if(obj == this)
-                {
-                    continue;
-                }
+                if (obj == this) continue;
+
                 if(_BoundingBox.Intersects(obj._BoundingBox))
                 {
                     obj.ReceiveDamage(1);

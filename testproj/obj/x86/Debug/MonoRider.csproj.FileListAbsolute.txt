@@ -86,8 +86,6 @@ C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\gear1.xnb
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\grassBackground.xnb
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\wheel.xnb
-C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\testProj.exe
-C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\testProj.pdb
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\MonoGame.Framework.dll
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\SharpDX.MediaFoundation.dll
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\SharpDX.dll
@@ -108,8 +106,10 @@ C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\SharpDX.Direct2D1
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\SharpDX.XInput.xml
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\SharpDX.RawInput.xml
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\SharpDX.Direct3D9.xml
-C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\testProj.exe
-C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\testProj.pdb
-C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\MonoRider.csprojResolveAssemblyReference.cache
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\rock.xnb
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\car1.xnb
+C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\MonoRider.exe
+C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\MonoRider.pdb
+C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\MonoRider.exe
+C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\MonoRider.pdb
+C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\MonoRider.csprojResolveAssemblyReference.cache
