@@ -16,7 +16,7 @@ namespace MonoRider
 
         public override void Setup()
         {
-            _HP = 1;
+            _HP = startHP;
             _Tag = SpriteType.kCarType;
             _FlipY = true;
             _zOrder = 2f;
@@ -59,6 +59,7 @@ namespace MonoRider
         public override void Activate()
         {
             Random num = new Random();
+            _HP = startHP;
             _Position.Y = -num.Next(11) * num.Next(250);
             if (num.Next(0, 2) == 0)
             {

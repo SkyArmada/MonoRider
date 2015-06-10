@@ -16,6 +16,7 @@ namespace MonoRider
         private ContentManager content;
         public float speed = 0f;
         public int midpoint = 160;
+        public int startHP = 1;
 
         //for inheritance
         public Sprite parent = null;
@@ -54,6 +55,7 @@ namespace MonoRider
             kRockType,
             kWheelType,
             kShieldType,
+            kOilType,
             kNoneType
         }
         public SpriteType _Tag = SpriteType.kNoneType;
@@ -255,6 +257,15 @@ namespace MonoRider
         {
             _CurrentState = SpriteState.kStateActive;
             _Draw = true;
+        }
+
+        public virtual void Activate(Vector2 pos)
+        {
+            _HP = startHP;
+            _CurrentState = SpriteState.kStateActive;
+            _Draw = true;
+
+            _Position = pos;
         }
     }
 }

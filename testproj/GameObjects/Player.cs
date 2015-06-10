@@ -26,7 +26,7 @@ namespace MonoRider
             last_momentum = 0;
             spinOut = false;
             loops = 0;
-            _HP = 1;
+            _HP = startHP;
             _Tag = SpriteType.kPlayerType;
             _LockInScreen = true;
             _zOrder = 15f;
@@ -83,10 +83,6 @@ namespace MonoRider
                 {
                     momentum += momentumGain * delta;
                 }
-                if (state.IsKeyDown(Keys.F))
-                {
-                    spinOut = true;
-                }
                 if (momentum >= 200)
                 {
                     momentum = 180;
@@ -135,6 +131,7 @@ namespace MonoRider
                     {
                         obj.ReceiveDamage(1);
                         speed += 10f;
+                        parentScene.gearsCollected++;
                     }
                 }
 
@@ -163,6 +160,16 @@ namespace MonoRider
                         obj.ReceiveDamage(1);
                         this.shielded = true;
                         this.ChangeColor(new Color(213, 255, 28, 255), new Color(255, 255, 255, 255));
+                    }
+                }
+
+                if (obj._Tag == SpriteType.kOilType && obj._CurrentState == SpriteState.kStateActive)
+                {
+                    if (this._BoundingBox.Intersects(obj._BoundingBox))
+                    {
+                        obj.ReceiveDamage(1);
+                        this.spinOut = true;
+                        _Rotation = 0;
                     }
                 }
             }

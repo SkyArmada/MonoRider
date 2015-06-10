@@ -112,4 +112,4 @@ C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\MonoRider.exe
 C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\MonoRider.pdb
 C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\MonoRider.exe
 C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\MonoRider.pdb
-C:\Users\rellzy\Documents\MonoRider\testProj\obj\x86\Debug\MonoRider.csprojResolveAssemblyReference.cache
+C:\Users\rellzy\Documents\MonoRider\testProj\bin\Windows\Debug\Content\Graphics\oil.xnb

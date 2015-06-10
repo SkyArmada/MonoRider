@@ -24,6 +24,7 @@ namespace MonoRider
         bool pausedPressed = false;
         float playerSpeed = 0f;
         int midPoint;
+        public int gearsCollected = 0;
         //bool moveRight = false;
         //bool moveLeft = false;
         //bool moveCenter = false;
@@ -85,7 +86,7 @@ namespace MonoRider
                 wheel.LoadContent("Graphics\\wheel", CM_Play);
                 wheel._Position = new Vector2(160, 520);
                 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 40; i++)
                 {
                     Gear gear = new Gear();
                     gear.LoadContent("Graphics\\gear1", CM_Play);
@@ -93,26 +94,33 @@ namespace MonoRider
                     GameObjectList.Add(gear);
                 }
 
-                for (int i = 0; i <= 10; i++)
+                for (int i = 0; i <= 30; i++)
                 {
                     EnemyCar car = new EnemyCar();
                     car.LoadContent("Graphics\\car2", CM_Play);
                     car.parentScene = this;
                     GameObjectList.Add(car);
                 }
-                for(int i = 0; i <= 5; i++)
+                for(int i = 0; i <= 30; i++)
                 {
-                    Rock hydrant = new Rock();
-                    hydrant.LoadContent("Graphics\\rock", CM_Play);
-                    hydrant.parentScene = this;
-                    GameObjectList.Add(hydrant);
+                    Rock rock = new Rock();
+                    rock.LoadContent("Graphics\\rock", CM_Play);
+                    rock.parentScene = this;
+                    GameObjectList.Add(rock);
                 }
-                for (int i = 0; i <= 2; i++)
+                for (int i = 0; i <= 30; i++)
                 {
                     Shield shield = new Shield();
                     shield.LoadContent("Graphics\\car1", CM_Play);
                     shield.parentScene = this;
                     GameObjectList.Add(shield);
+                }
+                for (int i = 0; i <= 15; i++)
+                {
+                    OilSlick slick = new OilSlick();
+                    slick.LoadContent("Graphics\\oil", CM_Play);
+                    slick.parentScene = this;
+                    GameObjectList.Add(slick);
                 }
             }
         }
@@ -138,22 +146,35 @@ namespace MonoRider
             if (!paused)
             {
                 int chancePerSecond = 101 - ((int)playerSpeed / 10);
+                if(chancePerSecond <= 15)
+                {
+                    chancePerSecond = 15;
+                }
                 if(Ranum.Next(0, chancePerSecond) == 0)
                 {
                     int ran = Ranum.Next(0, 100);
-                    if(ran <= 24)
+                    if(ran == 0)
+                    {
+                        PlacePattern("gearV");
+                    }
+                    else if (ran >= 1 && ran <= 24)
                     {
                         PlaceObject(Sprite.SpriteType.kGearType);
                     }
-                    else if(ran >= 25 && ran <= 64)
+                    else if (ran >= 25 && ran <= 64)
                     {
                         PlaceObject(Sprite.SpriteType.kCarType);
                     }
-                    else if(ran >= 65 && ran <= 90)
+
+                    else if (ran >= 65 && ran <= 80)
                     {
                         PlaceObject(Sprite.SpriteType.kRockType);
                     }
-                    else if(ran >= 91)
+                    else if (ran >= 91 && ran <= 94)
+                    {
+                        PlaceObject(Sprite.SpriteType.kOilType);
+                    }
+                    else if (ran >= 95)
                     {
                         PlaceObject(Sprite.SpriteType.kShieldType);
                     }
@@ -264,6 +285,34 @@ namespace MonoRider
                 return;
             }
             //sprite not found. gotta create one.
+        }
+
+        public void PlaceObject(Sprite.SpriteType type, Vector2 pos)
+        {
+            foreach (Sprite obj in GameObjectList)
+            {
+                if (obj._Tag != type) continue;
+                if (obj._CurrentState != Sprite.SpriteState.kStateInActive) continue;
+                obj.Activate(pos);
+                return;
+            }
+            //sprite not found. gotta create one.
+        }
+
+        public void PlacePattern(string name)
+        {
+            if(name.Equals("gearV"))
+            {
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -30));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(80, -70));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(140, -110));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(200, -150));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(260, -190));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(200, -230));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(140, -270));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(80, -310));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -350));
+            }
         }
 
         private void ResetGame()

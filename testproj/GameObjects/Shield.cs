@@ -15,7 +15,7 @@ namespace MonoRider
 
         public override void Setup()
         {
-            _HP = 1;
+            _HP = startHP;
             _Tag = SpriteType.kShieldType;
             _zOrder = 1f;
             _Position = new Vector2(-500, -500);
@@ -42,6 +42,7 @@ namespace MonoRider
         public override void Activate()
         {
             Random num = new Random();
+            _HP = startHP;
             _Position.Y = -num.Next(11) * num.Next(250);
             _Position.X = num.Next(320 - frameWidth);
             base.Activate();

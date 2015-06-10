@@ -3,30 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoRider
 {
-    class Gear : Sprite
+    class OilSlick : Sprite
     {
-        public Gear()
+        public OilSlick()
         {
             Setup();
         }
 
         public override void Setup()
         {
-            _Position = new Vector2(-500, -500);
             _HP = startHP;
-            _Tag = SpriteType.kGearType;
-            _zOrder = 1f;
+            _Tag = SpriteType.kOilType;
+            _zOrder = 2f;
+            midpoint = 160;
+            _Position = new Vector2(-500, -500);
+        }
+
+        public override void LoadContent(string path, Microsoft.Xna.Framework.Content.ContentManager Content)
+        {
+            base.LoadContent(path, Content);
         }
 
         public override void Update(GameTime gameTime, List<Sprite> gameObjectList)
         {
             if (_CurrentState != SpriteState.kStateActive) return;
 
-            _Rotation += 0.05f;
             _Position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_Position.Y > 500)
             {
@@ -40,8 +44,16 @@ namespace MonoRider
             Random num = new Random();
             _HP = startHP;
             _Position.Y = -num.Next(11) * num.Next(250);
-            _Position.X = num.Next(320 - frameWidth);
+            if (num.Next(0, 2) == 0)
+            {
+                _Position.X = midpoint - (num.Next(80));
+            }
+            else
+            {
+                _Position.X = midpoint + (num.Next(80));
+            }
             base.Activate();
         }
+
     }
 }
