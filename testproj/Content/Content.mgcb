@@ -90,9 +90,9 @@
 /processorParam:TextureFormat=Color
 /build:Graphics/oil.png
 
-#begin Font/Fipps-Regular.spritefont
+#begin Graphics/Fipps-Regular.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:TextureFormat=Compressed
-/build:Font/Fipps-Regular.spritefont
+/build:Graphics/Fipps-Regular.spritefont
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/Font/Fipps-Regular.spritefont</SourceFile>
-  <SourceTime>2015-06-10T17:14:12.5274519-05:00</SourceTime>
-  <DestFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/bin/Windows/Font/Fipps-Regular.xnb</DestFile>
-  <DestTime>2015-06-10T17:14:21.8040057-05:00</DestTime>
+  <SourceFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/Graphics/Fipps-Regular.spritefont</SourceFile>
+  <SourceTime>2015-01-19T18:24:04-06:00</SourceTime>
+  <DestFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/bin/Windows/Graphics/Fipps-Regular.xnb</DestFile>
+  <DestTime>2015-06-10T17:23:19.8012031-05:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2015-04-29T12:14:44-05:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

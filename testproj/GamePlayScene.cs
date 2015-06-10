@@ -25,6 +25,7 @@ namespace MonoRider
         float playerSpeed = 0f;
         int midPoint;
         public int gearsCollected = 0;
+        private SpriteFont font;
         //bool moveRight = false;
         //bool moveLeft = false;
         //bool moveCenter = false;
@@ -115,13 +116,14 @@ namespace MonoRider
                     shield.parentScene = this;
                     GameObjectList.Add(shield);
                 }
-                for (int i = 0; i <= 15; i++)
+                for (int i = 0; i <= 30; i++)
                 {
                     OilSlick slick = new OilSlick();
                     slick.LoadContent("Graphics\\oil", CM_Play);
                     slick.parentScene = this;
                     GameObjectList.Add(slick);
                 }
+                //font = Content.Load<SpriteFont>("Graphics\\Fipps-Regular");
             }
         }
 
@@ -153,11 +155,31 @@ namespace MonoRider
                 if(Ranum.Next(0, chancePerSecond) == 0)
                 {
                     int ran = Ranum.Next(0, 100);
-                    if(ran == 0)
+                    if(ran >= 0 && ran <= 10)
                     {
-                        PlacePattern("gearV");
+                        ran = Ranum.Next(0, 5);
+                        if (ran == 0)
+                        {
+                            PlacePattern("gear>");
+                        }
+                        else if (ran == 1)
+                        {
+                            PlacePattern("CGC");
+                        }
+                        else if (ran == 2)
+                        {
+                            PlacePattern("Hi");
+                        }
+                        else if (ran == 3)
+                        {
+                            PlacePattern("carV");
+                        }
+                        else if (ran == 4)
+                        {
+                            PlacePattern("giantRock");
+                        }
                     }
-                    else if (ran >= 1 && ran <= 24)
+                    else if (ran >= 11 && ran <= 24)
                     {
                         PlaceObject(Sprite.SpriteType.kGearType);
                     }
@@ -238,6 +260,9 @@ namespace MonoRider
             }
 
             wheel.Draw(spriteBatch);
+
+            //spriteBatch.DrawString(font, "Score: " + gearsCollected, new Vector2(20, 20), Color.Black);
+
             // Stop drawing
 
             spriteBatch.End();
@@ -301,7 +326,7 @@ namespace MonoRider
 
         public void PlacePattern(string name)
         {
-            if(name.Equals("gearV"))
+            if(name.Equals("gear>"))
             {
                 PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -30));
                 PlaceObject(Sprite.SpriteType.kGearType, new Vector2(80, -70));
@@ -312,6 +337,66 @@ namespace MonoRider
                 PlaceObject(Sprite.SpriteType.kGearType, new Vector2(140, -270));
                 PlaceObject(Sprite.SpriteType.kGearType, new Vector2(80, -310));
                 PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -350));
+            }
+            else if(name.Equals("CGC"))
+            {
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -30));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -90));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -150));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -210));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(160, -60));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(160, -90));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(160, -120));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -30));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -90));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -150));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -210));
+            }
+            else if(name.Equals("Hi"))
+            {
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -20));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -60));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -100));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -140));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(20, -180));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(140, -20));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(140, -60));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(140, -100));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(140, -140));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(140, -180));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(260, -20));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(260, -60));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(260, -100));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(260, -140));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(260, -180));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(60, -100));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(100, -100));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(220, -20));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(300, -200));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(220, -180));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(300, -180));
+            }
+            else if (name.Equals("carV"))
+            {
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -80));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(120, -60));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(160, -40));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -60));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(240, -80));
+            }
+            else if (name.Equals("giantRock"))
+            {
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(160, -40));
+
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(160, -30));
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(150, -30));
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(170, -30));
+
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(160, -20));
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(150, -20));
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(140, -20));
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(170, -20));
+                PlaceObject(Sprite.SpriteType.kRockType, new Vector2(180, -20));
             }
         }
 
