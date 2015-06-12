@@ -76,21 +76,21 @@ namespace MonoRider
                 spriteBatch = new SpriteBatch(GraphicsDevice);
 
                 // TODO: use this.Content to load your game content here
-                background = CM_Play.Load<Texture2D>("Graphics\\grassBackground");
+                background = CM_Play.Load<Texture2D>("grassBackground");
                 midPoint = (GraphicsDevice.Viewport.Width / 2);
 
-                player.LoadContent("Graphics\\car1", CM_Play);
+                player.LoadContent("car1", CM_Play);
                 player._Position = new Vector2(GraphicsDevice.Viewport.Width / 2, 320);
                 player.parentScene = this;
                 GameObjectList.Add(player);
 
-                wheel.LoadContent("Graphics\\wheel", CM_Play);
+                wheel.LoadContent("wheel", CM_Play);
                 wheel._Position = new Vector2(160, 520);
                 
                 for (int i = 0; i < 40; i++)
                 {
                     Gear gear = new Gear();
-                    gear.LoadContent("Graphics\\gear1", CM_Play);
+                    gear.LoadContent("gear1", CM_Play);
                     gear.parentScene = this;
                     GameObjectList.Add(gear);
                 }
@@ -98,32 +98,32 @@ namespace MonoRider
                 for (int i = 0; i <= 30; i++)
                 {
                     EnemyCar car = new EnemyCar();
-                    car.LoadContent("Graphics\\car2", CM_Play);
+                    car.LoadContent("car2", CM_Play);
                     car.parentScene = this;
                     GameObjectList.Add(car);
                 }
                 for(int i = 0; i <= 30; i++)
                 {
                     Rock rock = new Rock();
-                    rock.LoadContent("Graphics\\rock", CM_Play);
+                    rock.LoadContent("rock", CM_Play);
                     rock.parentScene = this;
                     GameObjectList.Add(rock);
                 }
                 for (int i = 0; i <= 30; i++)
                 {
                     Shield shield = new Shield();
-                    shield.LoadContent("Graphics\\car1", CM_Play);
+                    shield.LoadContent("car1", CM_Play);
                     shield.parentScene = this;
                     GameObjectList.Add(shield);
                 }
                 for (int i = 0; i <= 30; i++)
                 {
                     OilSlick slick = new OilSlick();
-                    slick.LoadContent("Graphics\\oil", CM_Play);
+                    slick.LoadContent("oil", CM_Play);
                     slick.parentScene = this;
                     GameObjectList.Add(slick);
                 }
-                //font = Content.Load<SpriteFont>("Graphics\\Fipps-Regular");
+                font = CM_Play.Load<SpriteFont>("test");
             }
         }
 
@@ -261,7 +261,7 @@ namespace MonoRider
 
             wheel.Draw(spriteBatch);
 
-            //spriteBatch.DrawString(font, "Score: " + gearsCollected, new Vector2(20, 20), Color.Black);
+            spriteBatch.DrawString(font, "Score: " + gearsCollected, new Vector2(5, 5), Color.Black);
 
             // Stop drawing
 
@@ -340,17 +340,17 @@ namespace MonoRider
             }
             else if(name.Equals("CGC"))
             {
-                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -30));
-                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -90));
-                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -150));
-                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(80, -210));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(100, -30));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(100, -90));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(100, -150));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(100, -210));
+                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(160, -30));
                 PlaceObject(Sprite.SpriteType.kGearType, new Vector2(160, -60));
                 PlaceObject(Sprite.SpriteType.kGearType, new Vector2(160, -90));
-                PlaceObject(Sprite.SpriteType.kGearType, new Vector2(160, -120));
-                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -30));
-                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -90));
-                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -150));
-                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(200, -210));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(220, -30));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(220, -90));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(220, -150));
+                PlaceObject(Sprite.SpriteType.kCarType, new Vector2(220, -210));
             }
             else if(name.Equals("Hi"))
             {
@@ -418,6 +418,7 @@ namespace MonoRider
             //moveRight = false;
             //moveLeft = false;
             Ranum = new Random();
+            gearsCollected = 0;
             this.LoadContent();
         }
     }
