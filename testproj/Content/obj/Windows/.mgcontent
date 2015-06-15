@@ -4,14 +4,14 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/car1.png</File>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/car2.png</File>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/gear1.png</File>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/grassBackground.png</File>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/oil.png</File>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/peppermint.png</File>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/rock.png</File>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/wheel.png</File>
-    <File>C:/Users/rellzy/Documents/MonoRider/testProj/Content/test.spritefont</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/car1.png</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/car2.png</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/gear1.png</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/grassBackground.png</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/oil.png</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/peppermint.png</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/rock.png</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/wheel.png</File>
+    <File>D:/GameDev/Monogame/MonoRider/testProj/Content/test.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/test.spritefont</SourceFile>
-  <SourceTime>2015-06-12T17:31:09.150087-05:00</SourceTime>
-  <DestFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/bin/Windows/test.xnb</DestFile>
-  <DestTime>2015-06-12T17:31:13.476547-05:00</DestTime>
+  <SourceFile>D:/GameDev/Monogame/MonoRider/testProj/Content/test.spritefont</SourceFile>
+  <SourceTime>2015-06-13T23:31:04.343504-05:00</SourceTime>
+  <DestFile>D:/GameDev/Monogame/MonoRider/testProj/Content/bin/Windows/test.xnb</DestFile>
+  <DestTime>2015-06-13T23:42:13.1168866-05:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2015-04-29T12:14:44-05:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

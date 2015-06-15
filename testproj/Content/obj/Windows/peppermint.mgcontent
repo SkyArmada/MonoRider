@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/peppermint.png</SourceFile>
-  <SourceTime>2015-05-28T09:40:02.5400105-05:00</SourceTime>
-  <DestFile>C:/Users/rellzy/Documents/MonoRider/testProj/Content/bin/Windows/peppermint.xnb</DestFile>
-  <DestTime>2015-06-12T16:14:53.5097231-05:00</DestTime>
+  <SourceFile>D:/GameDev/Monogame/MonoRider/testProj/Content/peppermint.png</SourceFile>
+  <SourceTime>2015-06-13T23:31:04.3415024-05:00</SourceTime>
+  <DestFile>D:/GameDev/Monogame/MonoRider/testProj/Content/bin/Windows/peppermint.xnb</DestFile>
+  <DestTime>2015-06-13T23:39:28.1127584-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T12:14:44-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

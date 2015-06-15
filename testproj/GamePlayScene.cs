@@ -47,6 +47,7 @@ namespace MonoRider
             CM_Play = new ContentManager(Content.ServiceProvider);
             CM_Play.RootDirectory = "Content";
             this.IsMouseVisible = true;
+            //currentState = GamePlayState.kStatePlay;
         }
 
         /// <summary>
@@ -70,18 +71,20 @@ namespace MonoRider
         /// </summary>
         protected override void LoadContent()
         {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = CM_Play.Load<SpriteFont>("test");
+            midPoint = (GraphicsDevice.Viewport.Width / 2);
             if (currentState == GamePlayState.kStatePlay)
             {
                 // Create a new SpriteBatch, which can be used to draw textures.
-                spriteBatch = new SpriteBatch(GraphicsDevice);
 
                 // TODO: use this.Content to load your game content here
                 background = CM_Play.Load<Texture2D>("grassBackground");
-                midPoint = (GraphicsDevice.Viewport.Width / 2);
 
                 player.LoadContent("car1", CM_Play);
                 player._Position = new Vector2(GraphicsDevice.Viewport.Width / 2, 320);
                 player.parentScene = this;
+                player._CurrentState = Sprite.SpriteState.kStateActive;
                 GameObjectList.Add(player);
 
                 wheel.LoadContent("wheel", CM_Play);
@@ -125,6 +128,9 @@ namespace MonoRider
                 }
                 font = CM_Play.Load<SpriteFont>("test");
             }
+            else if(currentState == GamePlayState.kStateGO)
+            {
+            }
         }
 
         /// <summary>
@@ -144,84 +150,91 @@ namespace MonoRider
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            HandleInput();
-            if (!paused)
+            if (currentState == GamePlayState.kStatePlay)
             {
-                int chancePerSecond = 101 - ((int)playerSpeed / 10);
-                if(chancePerSecond <= 15)
+                HandleInput();
+                if (!paused)
                 {
-                    chancePerSecond = 15;
-                }
-                if(Ranum.Next(0, chancePerSecond) == 0)
-                {
-                    int ran = Ranum.Next(0, 100);
-                    if(ran >= 0 && ran <= 10)
+                    int chancePerSecond = 101 - ((int)playerSpeed / 10);
+                    if (chancePerSecond <= 15)
                     {
-                        ran = Ranum.Next(0, 5);
-                        if (ran == 0)
-                        {
-                            PlacePattern("gear>");
-                        }
-                        else if (ran == 1)
-                        {
-                            PlacePattern("CGC");
-                        }
-                        else if (ran == 2)
-                        {
-                            PlacePattern("Hi");
-                        }
-                        else if (ran == 3)
-                        {
-                            PlacePattern("carV");
-                        }
-                        else if (ran == 4)
-                        {
-                            PlacePattern("giantRock");
-                        }
+                        chancePerSecond = 15;
                     }
-                    else if (ran >= 11 && ran <= 24)
+                    if (Ranum.Next(0, chancePerSecond) == 0)
                     {
-                        PlaceObject(Sprite.SpriteType.kGearType);
-                    }
-                    else if (ran >= 25 && ran <= 64)
-                    {
-                        PlaceObject(Sprite.SpriteType.kCarType);
-                    }
+                        int ran = Ranum.Next(0, 100);
+                        if (ran >= 0 && ran <= 10)
+                        {
+                            ran = Ranum.Next(0, 5);
+                            if (ran == 0)
+                            {
+                                PlacePattern("gear>");
+                            }
+                            else if (ran == 1)
+                            {
+                                PlacePattern("CGC");
+                            }
+                            else if (ran == 2)
+                            {
+                                PlacePattern("Hi");
+                            }
+                            else if (ran == 3)
+                            {
+                                PlacePattern("carV");
+                            }
+                            else if (ran == 4)
+                            {
+                                PlacePattern("giantRock");
+                            }
+                        }
+                        else if (ran >= 11 && ran <= 24)
+                        {
+                            PlaceObject(Sprite.SpriteType.kGearType);
+                        }
+                        else if (ran >= 25 && ran <= 64)
+                        {
+                            PlaceObject(Sprite.SpriteType.kCarType);
+                        }
 
-                    else if (ran >= 65 && ran <= 80)
-                    {
-                        PlaceObject(Sprite.SpriteType.kRockType);
+                        else if (ran >= 65 && ran <= 80)
+                        {
+                            PlaceObject(Sprite.SpriteType.kRockType);
+                        }
+                        else if (ran >= 91 && ran <= 94)
+                        {
+                            PlaceObject(Sprite.SpriteType.kOilType);
+                        }
+                        else if (ran >= 95)
+                        {
+                            PlaceObject(Sprite.SpriteType.kShieldType);
+                        }
                     }
-                    else if (ran >= 91 && ran <= 94)
+                    // TODO: Add your update logic here
+                    foreach (Sprite obj in GameObjectList)
                     {
-                        PlaceObject(Sprite.SpriteType.kOilType);
+                        if (obj._Tag == Sprite.SpriteType.kPlayerType)
+                        {
+                            playerSpeed = obj.speed;
+                        }
+                        else
+                        {
+                            obj.speed = playerSpeed;
+                        }
+                        obj.Update(gameTime, GameObjectList);
                     }
-                    else if (ran >= 95)
-                    {
-                        PlaceObject(Sprite.SpriteType.kShieldType);
-                    }
+                    wheel.Update(gameTime, player.momentum);
+                    base.Update(gameTime);
                 }
-                // TODO: Add your update logic here
-                foreach (Sprite obj in GameObjectList)
+
+                if (player._CurrentState == Sprite.SpriteState.kStateInActive)
                 {
-                    if(obj._Tag == Sprite.SpriteType.kPlayerType)
-                    {
-                        playerSpeed = obj.speed;
-                    }
-                    else
-                    {
-                        obj.speed = playerSpeed;
-                    }
-                    obj.Update(gameTime, GameObjectList);
+                    this.ResetGame();
+
                 }
-                wheel.Update(gameTime, player.momentum);
-                base.Update(gameTime);
             }
-
-            if(player._CurrentState == Sprite.SpriteState.kStateInActive)
+            else if(currentState == GamePlayState.kStateGO)
             {
-                this.ResetGame();
-                
+
             }
         }
 
@@ -249,19 +262,26 @@ namespace MonoRider
 
                 // Sprite effects! https://msdn.microsoft.com/en-us/library/bb203872(v=xnagamestudio.40).aspx
             }
-            //spriteBatch.Draw(background, new Rectangle(midPoint-160, 0, 320, 480), Color.White);
-            float test = midPoint - (background.Width/2);
-            spriteBatch.Draw(background, new Vector2(test, 0), Color.White);
-
-            // Draw the Player
-            foreach (Sprite obj in GameObjectList)
+            if (currentState == GamePlayState.kStatePlay)
             {
-                obj.Draw(spriteBatch);
+                //spriteBatch.Draw(background, new Rectangle(midPoint-160, 0, 320, 480), Color.White);
+                float test = midPoint - (background.Width / 2);
+                spriteBatch.Draw(background, new Vector2(test, 0), Color.White);
+
+                // Draw the Player
+                foreach (Sprite obj in GameObjectList)
+                {
+                    obj.Draw(spriteBatch);
+                }
+
+                wheel.Draw(spriteBatch);
+
+                spriteBatch.DrawString(font, "Score: " + gearsCollected, new Vector2(5, 5), Color.Black);
             }
-
-            wheel.Draw(spriteBatch);
-
-            spriteBatch.DrawString(font, "Score: " + gearsCollected, new Vector2(5, 5), Color.Black);
+            else if(currentState == GamePlayState.kStateGO)
+            {
+                spriteBatch.DrawString(font, "Game over!", new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.Black);
+            }
 
             // Stop drawing
 
@@ -406,11 +426,11 @@ namespace MonoRider
             {
                 obj.ResetSelf();
             }
-            this.UnloadContent();
             if (GameObjectList.Count >= 1)
             {
                 GameObjectList.Clear();
             }
+            this.UnloadContent();
             paused = false;
             pausedPressed = false;
             playerSpeed = 0f;
@@ -419,7 +439,13 @@ namespace MonoRider
             //moveLeft = false;
             Ranum = new Random();
             gearsCollected = 0;
-            this.LoadContent();
+            currentState = GamePlayState.kStateGO;
+
+            using (var game = new GameOverScene())
+            {
+
+            }
+            //this.LoadContent();
         }
     }
 }
